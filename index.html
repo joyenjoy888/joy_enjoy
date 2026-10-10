@@ -3,163 +3,724 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>想享能量美學工作坊 Joy & Enjoy | 蘊髮育膚・能量美學・天然植萃</title>
-  <meta name="description" content="想享能量美學工作坊致力於「給自己的幸福，很簡單」，提供天然植萃、無藥性全方位髮膚護理產品。">
+  <title>想享能量美學工作坊 Joy & Enjoy | 官方產品型錄與內容管理系統</title>
+  <meta name="description" content="想享能量美學工作坊 - 天然植萃、無藥性全方位髮膚養護與黃金梳循環體驗。">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root { --gold: #c59b48; --sage: #385e4c; --bg: #fcfbfa; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif; background: var(--bg); }
-    .glass-header { background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); }
-    .badge-gold { background: #fdf3d8; color: #8c6014; border: 1px solid rgba(197,155,72,0.3); }
+    :root { --primary-gold: #c59b48; --bg-color: #fcfbfa; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif; background-color: var(--bg-color); }
+    .glass-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+    .badge-gold { background: #fdf3d8; color: #8c6014; border: 1px solid rgba(197, 155, 72, 0.35); }
   </style>
 </head>
-<body class="text-stone-800 antialiased">
+<body class="text-stone-800 antialiased selection:bg-amber-200 selection:text-amber-900">
 
   <!-- 公告跑馬條 -->
   <div class="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-amber-200 text-xs py-2 px-4 text-center font-medium">
-    ✨ 全館單筆滿 <strong>NT$ 1,988 元</strong> 即享 7-11 賣貨便免運費 ｜ 高雄市左營區博愛二路646號 (漢神巨蛋正對面)
+    ✨ 全館單筆滿 <strong>NT$ 1,988 元</strong> 即享 7-11 賣貨便免運費 ｜ 實體旗艦：高雄市左營區博愛二路646號 (漢神巨蛋正對面)
   </div>
 
   <!-- 頂部導覽列 -->
-  <header class="sticky top-0 z-40 glass-header border-b border-stone-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-amber-700 text-white flex items-center justify-center font-black text-xl">享</div>
+  <header class="sticky top-0 z-40 glass-header border-b border-stone-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      
+      <!-- 品牌 Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('front')">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 text-white flex items-center justify-center font-black text-xl shadow-md">享</div>
         <div>
           <span class="text-xs uppercase tracking-widest text-amber-800 font-bold block leading-none">Joy &amp; Enjoy</span>
-          <h1 class="text-xl font-black text-stone-900">想享能量美學工作坊</h1>
+          <h1 class="text-xl sm:text-2xl font-black text-stone-900">想享能量美學</h1>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="px-3.5 py-2 bg-amber-100 text-amber-900 font-bold text-xs rounded-xl hover:bg-amber-200 transition">7-11 賣貨便</a>
-        <a href="https://joyenjoy.simplybook.asia/" target="_blank" class="px-3.5 py-2 bg-stone-900 text-amber-200 font-bold text-xs rounded-xl hover:bg-stone-800 transition">線上預約</a>
+
+      <!-- 右側切換與連結按鈕 -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100 transition shadow-sm">
+          7-11 賣貨便
+        </a>
+
+        <!-- 前/後台切換按鈕 -->
+        <button id="btnToggleMode" onclick="toggleMode()" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-stone-900 text-amber-200 hover:bg-stone-800 shadow">
+          <span id="toggleModeIcon">⚙️</span>
+          <span id="toggleModeText">後台管理系統</span>
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero 橫幅 -->
-  <section class="py-16 md:py-20 bg-gradient-to-b from-amber-50/60 to-transparent">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <span class="inline-block px-3 py-1 bg-amber-100 text-amber-900 text-xs font-bold rounded-full mb-4">🌿 蘊髮育膚 × 能量舒壓 × 天然植萃</span>
-      <h2 class="text-4xl md:text-5xl font-black text-stone-900 mb-4 tracking-tight">給自己的幸福，<span class="text-amber-700">很簡單。</span></h2>
-      <p class="text-stone-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed mb-8">
-        我們致力於提供天然植萃、無藥性、環境友善的全方位髮膚護理產品。結合專利黃金梳經絡梳壓，讓您的肌膚與心靈一體被療癒。
-      </p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="#products" class="px-6 py-3 bg-amber-700 text-white font-bold text-sm rounded-xl shadow-lg hover:bg-amber-800 transition">探索全系列產品</a>
-        <a href="https://page.line.me/368ilvof" target="_blank" class="px-6 py-3 bg-[#06C755] text-white font-bold text-sm rounded-xl shadow transition">LINE 預約諮詢 (@joy.enjoy)</a>
+  <!-- ============================================== -->
+  <!-- 前台展示視圖 (Front-end View) -->
+  <!-- ============================================== -->
+  <main id="view-front" class="min-h-screen">
+    <!-- Hero 橫幅 -->
+    <section class="py-14 sm:py-20 bg-gradient-to-b from-amber-50/70 via-stone-50 to-[#FCFBFA]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+        <span class="inline-block px-3.5 py-1.5 bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold rounded-full mb-4">
+          🌿 蘊髮育膚 × 能量舒壓 × 天然植萃
+        </span>
+        <h2 class="text-4xl sm:text-5xl font-black text-stone-900 mb-4 tracking-tight">
+          給自己的幸福，<span class="text-amber-700">很簡單。</span>
+        </h2>
+        <p class="text-stone-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8">
+          我們致力於提供天然植萃、無藥性、環境友善的全方位髮膚護理產品。結合專利黃金梳經絡梳壓，讓您的肌膚與心靈一體被療癒。
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-3.5">
+          <a href="#products-section" class="px-6 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-lg transition">探索全系列產品</a>
+          <a href="https://joyenjoy.simplybook.asia/" target="_blank" class="px-6 py-3 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 font-bold text-sm rounded-xl shadow-sm transition">線上預約沙龍體驗</a>
+          <a href="https://page.line.me/368ilvof" target="_blank" class="px-6 py-3 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-sm rounded-xl shadow transition">LINE 客服諮詢 (@joy.enjoy)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 產品型錄專區 -->
+    <section id="products-section" class="py-12 max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Collections</span>
+          <h3 class="text-2xl sm:text-3xl font-black text-stone-900 mt-0.5">官方產品內容型錄</h3>
+          <p class="text-stone-500 text-xs mt-1">點擊卡片可查看詳細圖文介紹與成分；點右上角「⚙️ 後台管理系統」可隨時上傳您自己的真實照片！</p>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="searchInput" placeholder="搜尋商品名稱、功效..." class="px-4 py-2.5 bg-white border border-stone-300 rounded-xl text-xs w-full sm:w-64 focus:outline-none focus:border-amber-700 shadow-sm">
+        </div>
+      </div>
+
+      <!-- 分類切換按鈕區 -->
+      <div class="flex gap-2 overflow-x-auto pb-4 mb-8" id="categoryTabs"></div>
+
+      <!-- 商品數量統計與後台入口捷徑 -->
+      <div class="flex items-center justify-between text-xs text-stone-500 mb-6">
+        <span id="productCountLabel">載入中...</span>
+        <button onclick="switchView('admin')" class="text-amber-800 font-bold hover:underline flex items-center gap-1">
+          ⚙️ 想要更換正確照片或價格？前往後台編輯 ➔
+        </button>
+      </div>
+
+      <!-- 產品卡片列表網格 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid"></div>
+    </section>
+
+    <!-- 門市資訊專區 -->
+    <section class="py-14 bg-stone-900 text-stone-300 text-xs mt-12 border-t border-stone-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="w-8 h-8 rounded-lg bg-amber-600 text-white font-bold flex items-center justify-center text-sm">享</span>
+            <h4 class="text-white font-bold text-base">想享能量美學工作坊</h4>
+          </div>
+          <p class="leading-relaxed text-stone-400">
+            Joy &amp; Enjoy 能量美學｜蘊髮育膚<br>
+            天然植萃、無藥性、環境友善，給自己的幸福，很簡單。
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">實體門市與預約</h4>
+          <p>地址：高雄市左營區博愛二路 646 號 (漢神巨蛋正對面)</p>
+          <p class="mt-1.5">營業時間：週一 ～ 週六 11:00 - 19:30 (週日公休)</p>
+          <p class="mt-1.5">線上預約系統：joyenjoy.simplybook.asia</p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">官方社群通路</h4>
+          <p>LINE 官方客服：<strong class="text-white">@joy.enjoy</strong></p>
+          <p class="mt-1.5">Instagram：<strong>joy.enjoy.tw</strong></p>
+          <p class="mt-1.5">7-11 賣貨便：全館滿 1988 即享超商免運</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 後台管理視圖 (Admin Dashboard View) -->
+  <!-- ============================================== -->
+  <section id="view-admin" class="hidden min-h-screen bg-stone-100 pb-24">
+    <!-- 後台標題列 -->
+    <div class="bg-white border-b border-stone-200 py-6 px-4 sm:px-8">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 bg-amber-100 text-amber-900 rounded text-xs font-bold mb-1">內容管理控制台</span>
+          <h2 class="text-2xl font-black text-stone-900">想享能量美學 - 產品內容管理系統</h2>
+          <p class="text-stone-500 text-xs mt-0.5">點擊下方任一商品的「✏️ 編輯」即可上傳您筆電裡的真實照片，修改會自動儲存在您的瀏覽器中！</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="switchView('front')" class="px-4 py-2 bg-white border border-stone-300 text-stone-700 font-bold text-xs rounded-xl hover:bg-stone-50 transition">
+            ← 返回前台瀏覽
+          </button>
+          <button onclick="openProductModal()" class="px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded-xl shadow transition">
+            ➕ 新增產品
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 後台主功能區 -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-8 space-y-6">
+      <!-- 統計數據 -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
+          <div class="text-xs text-stone-500 font-medium">總商品數量</div>
+          <div id="statTotal" class="text-3xl font-black text-stone-900 mt-1">0</div>
+        </div>
+        <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
+          <div class="text-xs text-stone-500 font-medium">熱銷與推薦品項</div>
+          <div id="statFeatured" class="text-3xl font-black text-amber-800 mt-1">0</div>
+        </div>
+        <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
+          <div class="text-xs text-stone-500 font-medium">資料庫狀態</div>
+          <div class="text-sm font-bold text-emerald-700 mt-2 flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+            瀏覽器 LocalStorage 即時同步中
+          </div>
+        </div>
+      </div>
+
+      <!-- 備份與還原工具列 -->
+      <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h4 class="font-bold text-stone-900 text-sm">💾 商品資料備份工具</h4>
+          <p class="text-stone-500 text-xs mt-0.5">更換好照片與內容後，建議點擊「匯出備份 (JSON)」存檔，換電腦也能一鍵「匯入」！</p>
+        </div>
+        <div class="flex flex-wrap gap-2.5">
+          <button onclick="exportData()" class="px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-xl text-xs font-bold transition">
+            匯出備份 (JSON)
+          </button>
+          <label class="px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-xl text-xs font-bold transition cursor-pointer">
+            匯入備份 (JSON)
+            <input type="file" accept=".json" class="hidden" onchange="importData(event)">
+          </label>
+          <button onclick="resetDefaultData()" class="px-3.5 py-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-xl text-xs font-bold transition">
+            重置回原廠官方預設
+          </button>
+        </div>
+      </div>
+
+      <!-- 商品列表管理表格 -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+        <div class="p-4 sm:p-5 border-b border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <h3 class="font-bold text-stone-900 text-base">目前在架商品管理</h3>
+          <div class="flex gap-2">
+            <select id="adminCatFilter" onchange="renderAdminList()" class="px-3 py-1.5 bg-stone-50 border border-stone-300 rounded-lg text-xs"></select>
+            <input type="text" id="adminSearchInput" oninput="renderAdminList()" placeholder="搜尋品名..." class="px-3 py-1.5 bg-stone-50 border border-stone-300 rounded-lg text-xs">
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-500 uppercase tracking-wider">
+                <th class="px-4 py-3">商品圖片與品名</th>
+                <th class="px-4 py-3">分類</th>
+                <th class="px-4 py-3">規格</th>
+                <th class="px-4 py-3">優惠售價</th>
+                <th class="px-4 py-3">標籤徽章</th>
+                <th class="px-4 py-3 text-right">操作</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody" class="divide-y divide-stone-100"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 產品型錄專區 -->
-  <section id="products" class="py-12 max-w-7xl mx-auto px-4">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-      <div>
-        <h3 class="text-2xl font-black text-stone-900">官方產品型錄</h3>
-        <p class="text-stone-500 text-xs mt-1">高雄漢神巨蛋對面實體店精選｜支援分類篩選與即時搜尋</p>
-      </div>
-      <div class="flex gap-2">
-        <input type="text" id="searchInput" placeholder="搜尋商品名稱或功效..." class="px-3.5 py-2 border border-stone-300 rounded-xl text-xs w-64 focus:outline-none focus:border-amber-700">
+  <!-- ============================================== -->
+  <!-- 新增/編輯產品 Modal 視窗 (含圖片更換功能) -->
+  <!-- ============================================== -->
+  <div id="productEditModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm" onclick="closeProductModal()"></div>
+    <div class="min-h-full flex items-center justify-center p-4">
+      <div class="relative bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-stone-200 overflow-hidden z-10">
+        <div class="p-5 border-b border-stone-200 flex items-center justify-between">
+          <div>
+            <h3 id="modalTitle" class="font-bold text-stone-900 text-lg">編輯商品圖文</h3>
+            <p class="text-stone-500 text-xs">您可以從電腦上傳真實商品照片，或直接貼上圖片連結</p>
+          </div>
+          <button onclick="closeProductModal()" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center">✕</button>
+        </div>
+
+        <form id="productForm" onsubmit="saveProduct(event)" class="p-5 sm:p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+          <input type="hidden" id="edit-id">
+
+          <!-- 圖片上傳區塊（重點！） -->
+          <div class="p-4 bg-amber-50/60 rounded-2xl border border-amber-200 space-y-3">
+            <label class="block text-xs font-bold text-amber-900">📸 產品圖片設定（上傳實拍照片或填寫連結）</label>
+            <div class="flex gap-4 items-start">
+              <div class="w-24 h-24 rounded-xl bg-stone-100 border border-stone-300 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                <img id="edit-img-preview" src="" alt="預覽" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-1 space-y-2">
+                <div>
+                  <label class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm transition">
+                    📂 從電腦選擇真實照片 (自動更新)
+                    <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
+                  </label>
+                </div>
+                <div class="text-[11px] text-stone-500">或者直接貼上圖片網址（例如 7-11 賣貨便或 FB 照片連結）：</div>
+                <input type="text" id="edit-img" placeholder="https://..." oninput="updatePreview(this.value)" class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs focus:outline-none focus:border-amber-700">
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">產品名稱 *</label>
+              <input type="text" id="edit-name" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">所屬分類 *</label>
+              <select id="edit-cat" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">優惠售價 (NT$) *</label>
+              <input type="number" id="edit-price" required min="0" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm font-mono focus:outline-none focus:border-amber-700">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">原價 (NT$)</label>
+              <input type="number" id="edit-orig" min="0" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm font-mono focus:outline-none focus:border-amber-700">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">規格容量</label>
+              <input type="text" id="edit-spec" placeholder="如：120ml 或 單支裝" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">標籤徽章 (如：明星爆款)</label>
+              <input type="text" id="edit-badge" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700">
+            </div>
+            <div class="flex items-center gap-2 pt-6">
+              <input type="checkbox" id="edit-featured" class="w-4 h-4 text-amber-700 rounded border-stone-300">
+              <label for="edit-featured" class="text-xs font-bold text-stone-700 cursor-pointer">設為熱門推薦商品</label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">產品詳細介紹與理念</label>
+            <textarea id="edit-desc" rows="3" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">使用方法與成份特色</label>
+            <textarea id="edit-usage" rows="2" placeholder="每日早晚輕柔梳理3-5分鐘..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></textarea>
+          </div>
+
+          <div class="pt-4 border-t border-stone-200 flex justify-end gap-3">
+            <button type="button" onclick="closeProductModal()" class="px-4 py-2 border border-stone-300 rounded-xl text-xs font-bold hover:bg-stone-50">取消</button>
+            <button type="submit" class="px-6 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold shadow">確認儲存</button>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
 
-    <!-- 分類切換按鈕 -->
-    <div class="flex gap-2 overflow-x-auto pb-4 mb-6" id="categoryButtons"></div>
-
-    <!-- 產品卡片清單 -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productList"></div>
-  </section>
-
-  <!-- 門市資訊 -->
-  <section class="py-12 bg-stone-900 text-stone-300 text-xs">
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div>
-        <h4 class="text-white font-bold text-sm mb-2">想享能量美學工作坊</h4>
-        <p>給自己的幸福，很簡單。天然植萃、無藥性全方位髮膚養護。</p>
-      </div>
-      <div>
-        <h4 class="text-white font-bold text-sm mb-2">門市資訊</h4>
-        <p>地址：高雄市左營區博愛二路646號 (漢神巨蛋正對面)</p>
-        <p class="mt-1">營業時間：週一～週六 11:00 - 19:30 (週日公休)</p>
-      </div>
-      <div>
-        <h4 class="text-white font-bold text-sm mb-2">官方社群</h4>
-        <p>LINE ID: <strong>@joy.enjoy</strong></p>
-        <p class="mt-1">IG: joy.enjoy.tw ｜ FB: 想享能量美學蘊髮育膚</p>
+  <!-- ============================================== -->
+  <!-- 產品前台詳情 Modal 視窗 -->
+  <!-- ============================================== -->
+  <div id="detailModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm" onclick="closeDetailModal()"></div>
+    <div class="min-h-full flex items-center justify-center p-4">
+      <div class="relative bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-stone-200 overflow-hidden z-10 p-6 sm:p-8">
+        <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center">✕</button>
+        <div id="detailModalContent"></div>
       </div>
     </div>
-  </section>
+  </div>
 
+  <!-- JavaScript 核心狀態與資料 -->
   <script>
-    const PRODUCTS = [
-      { id: 1, cat: 'tools', name: '黃金梳。大梳', price: 1999, orig: 2280, spec: '單支裝', badge: '明星爆款', img: 'https://images.unsplash.com/photo-1590159763121-7c9ff3149e0a?auto=format&fit=crop&w=600&q=80', desc: '純銅鍍金梳針與高彈力排氣氣囊，深層放鬆緊繃經絡。' },
-      { id: 2, cat: 'tools', name: '黃金梳。愛心梳', price: 688, orig: 880, spec: '便攜款', badge: '熱銷推薦', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80', desc: '愛心人體工學掌上型流線，隨時梳理肩頸筋膜。' },
-      { id: 3, cat: 'tools', name: '黃金梳組合。大梳＆小梳', price: 2500, orig: 3160, spec: '禮盒雙入', badge: '超值組合', img: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80', desc: '居家大梳深度放鬆，隨身小梳提神減壓。' },
-      { id: 4, cat: 'skin', name: '天使肌☆原初潔膚蜜', price: 1900, orig: 2100, spec: '130ml', badge: '溫和清潔', img: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80', desc: '親水親油凝蜜質地，溫和溶解髒污，保留天然屏障。' },
-      { id: 5, cat: 'skin', name: '天使肌☆全效保濕淨化水', price: 2000, orig: 2300, spec: '120ml', badge: '基底補水', img: 'https://images.unsplash.com/photo-1608248597359-0f46c645e755?auto=format&fit=crop&w=600&q=80', desc: '微分子活水滲透，調理外油內乾，晶瑩澄澈。' },
-      { id: 6, cat: 'skin', name: '天使肌☆全效修護精華乳', price: 2700, orig: 3000, spec: '120ml', badge: '鎖水修護', img: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80', desc: '一抹融化化為防護水膜，撫平乾燥緊繃。' },
-      { id: 7, cat: 'skin', name: '天使肌☆炫麗七重保濕精華液', price: 4875, orig: 5500, spec: '30ml', badge: '頂級奢寵', img: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80', desc: '七重玻尿酸矩陣層層滲透，打照通透澎潤光芒。' },
-      { id: 8, cat: 'anti', name: '極透藍藻洗卸慕斯', price: 780, orig: 980, spec: '100ml', badge: '新品推薦', img: 'https://images.unsplash.com/photo-1556228722-d0b5d5d852cb?auto=format&fit=crop&w=600&q=80', desc: '藍藻微胞綿密泡沫，深入毛孔溫和洗淨。' },
-      { id: 9, cat: 'anti', name: '肌因逆時極光露', price: 2380, orig: 2680, spec: '100ml', badge: '拋光神器', img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80', desc: '微藻溫和代謝暗沉老角質，細緻毛孔。' },
-      { id: 10, cat: 'hair', name: '心生。洗髮精', price: 1580, orig: 1800, spec: '500ml', badge: '熱銷回購', img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=600&q=80', desc: '無矽靈天然草本植萃，淨化毛囊，髮根自然蓬鬆。' },
-      { id: 11, cat: 'hair', name: '心生。養髮液 (花調/木調)', price: 1980, orig: 2200, spec: '150ml', badge: '蘊髮必備', img: 'https://images.unsplash.com/photo-1608248597359-0f46c645e755?auto=format&fit=crop&w=600&q=80', desc: '活絡滋養髮根毛囊，強健髮根微生態。' },
-      { id: 12, cat: 'body', name: '心宇。沐浴露', price: 1680, orig: 1950, spec: '400ml', badge: '香氛療癒', img: 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=600&q=80', desc: '天然純精油芳香蒸氣，洗去一身疲憊。' }
-    ];
-
-    const CATS = [
+    const CATEGORIES = [
       { id: 'all', name: '全部商品' },
       { id: 'tools', name: '黃金梳能量工具' },
-      { id: 'skin', name: '天使肌養膚' },
-      { id: 'anti', name: '逆時煥膚' },
-      { id: 'hair', name: '心生頭皮養護' },
-      { id: 'body', name: '心宇沐浴' }
+      { id: 'skin', name: '天使肌養膚系列' },
+      { id: 'anti', name: '極致逆時煥膚' },
+      { id: 'hair', name: '心生頭皮髮絲養護' },
+      { id: 'body', name: '心宇身體沐浴' }
     ];
 
-    let currentCat = 'all';
-    let keyword = '';
+    const DEFAULT_PRODUCTS = [
+      { id: 'p1', cat: 'tools', name: '黃金梳。大梳', price: 1999, orig: 2280, spec: '單支裝 (大)', badge: '明星爆款', featured: true, img: 'https://images.unsplash.com/photo-1590159763121-7c9ff3149e0a?auto=format&fit=crop&w=600&q=80', desc: '純銅鍍金梳針與高彈力排氣氣囊，深層放鬆緊繃頭皮與經絡，天天梳理喚醒蓬鬆秀髮。', usage: '每日早晚或洗髮前輕柔梳理3-5分鐘，釋放壓力。' },
+      { id: 'p2', cat: 'tools', name: '黃金梳。愛心梳', price: 688, orig: 880, spec: '便攜款', badge: '熱銷推薦', featured: true, img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80', desc: '小巧愛心流線設計，隨身放在化妝包，隨時隨地梳理肩頸筋膜。', usage: '握於掌心輕刮肩頸、鎖骨筋膜，舒緩緊繃。' },
+      { id: 'p3', cat: 'tools', name: '黃金梳組合。大梳＆小梳', price: 2500, orig: 3160, spec: '禮盒套組', badge: '超值組合', featured: true, img: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80', desc: '大梳守護居家養護，小梳貼心隨身隨行，全方位呵護秀髮與緊繃身心。', usage: '早晚大梳深層梳壓，日間小梳隨身舒壓。' },
+      { id: 'p4', cat: 'skin', name: '天使肌☆原初潔膚蜜', price: 1900, orig: 2100, spec: '130ml', badge: '溫和清潔', featured: false, img: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80', desc: '親水親油凝蜜質地，溫和溶解彩妝髒污，保留肌膚天然皮脂屏障。', usage: '手乾臉乾取適量按摩溶解髒污，加水乳化後洗淨。' },
+      { id: 'p5', cat: 'skin', name: '天使肌☆柔嫩潔膚乳', price: 1900, orig: 2100, spec: '120ml', badge: '敏感肌推薦', featured: false, img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80', desc: '如雲朵般細緻柔和，洗後不緊繃、不乾澀，給肌膚最原初的溫和對待。', usage: '加水搓揉起泡後塗抹臉部，溫和洗淨。' },
+      { id: 'p6', cat: 'skin', name: '天使肌☆全效保濕淨化水', price: 2000, orig: 2300, spec: '120ml', badge: '基底補水', featured: true, img: 'https://images.unsplash.com/photo-1608248597359-0f46c645e755?auto=format&fit=crop&w=600&q=80', desc: '微分子活水滲透，調理外油內乾，讓肌膚重現晶瑩澄澈的水潤健康。', usage: '早晚潔面後輕拍於臉部及頸部至吸收。' },
+      { id: 'p7', cat: 'skin', name: '天使肌☆全效修護精華乳', price: 2700, orig: 3000, spec: '120ml', badge: '修護鎖水', featured: false, img: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80', desc: '輕盈乳液質地，一抹融化化為細緻保護膜，強化防禦力。', usage: '精華後取適量均勻塗抹於臉部及頸部。' },
+      { id: 'p8', cat: 'skin', name: '天使肌☆炫麗七重保濕精華液', price: 4875, orig: 5500, spec: '30ml', badge: '頂級奢寵', featured: true, img: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80', desc: '七重玻尿酸多維矩陣層層滲透，打照通透澎潤如天使般的水光肌。', usage: '滴取適量輕拍全臉，感受瞬間爆水滋潤感。' },
+      { id: 'p9', cat: 'skin', name: '天使肌☆ RE 頂級安瓶', price: 16250, orig: 18000, spec: '50ml', badge: '尊榮旗艦', featured: true, img: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=600&q=80', desc: '想享能量美學最高奢頂級之作！極致濃縮賦活再生能量，逆轉時光奇蹟。', usage: '夜間深度保養時滴取適量均勻提拉按摩。' },
+      { id: 'p10', cat: 'anti', name: '極透藍藻洗卸慕斯', price: 780, orig: 980, spec: '100ml', badge: '人氣新品', featured: true, img: 'https://images.unsplash.com/photo-1556228722-d0b5d5d852cb?auto=format&fit=crop&w=600&q=80', desc: '一按即出微胞泡沫，深層帶走髒污殘妝，藍藻活萃洗後水潤透亮。', usage: '按壓2-3下泡沫於微濕臉部打圈按摩後洗淨。' },
+      { id: 'p11', cat: 'anti', name: '肌因逆時極光露', price: 2380, orig: 2680, spec: '100ml', badge: '拋光神器', featured: false, img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80', desc: '如晨曦露水般清透，溫和代謝暗沉角質與粗大毛孔，煥發極光光澤。', usage: '化妝棉沾取輕拭角質較厚部位後輕拍全臉。' },
+      { id: 'p12', cat: 'anti', name: '喚顏逆時緊緻精萃', price: 3280, orig: 3800, spec: '30ml', badge: '緊緻撫紋', featured: true, img: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80', desc: '高抗氧微藻精萃與緊緻胜肽，撫平細紋，重塑臉部澎彈輪廓。', usage: '早晚取3滴塗抹臉部並順下顎線向上提拉。' },
+      { id: 'p13', cat: 'anti', name: '全效柔嫩逆時多肽霜', price: 3080, orig: 3500, spec: '30ml', badge: '賦活抗老', featured: false, img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=600&q=80', desc: '天鵝絨般奢華綿密，多重胜肽封存肌底水份，一夜醒來細緻柔滑。', usage: '保養最後一步取珍珠大小溫熱按壓全臉。' },
+      { id: 'p14', cat: 'anti', name: '玻璃肌鑽光C＋膠原', price: 1680, orig: 1980, spec: '15ml', badge: '高光美白', featured: false, img: 'https://images.unsplash.com/photo-1567928805192-7ff4c28efc18?auto=format&fit=crop&w=600&q=80', desc: '穩定型維他命C搭配水解膠原，打造通透折射如玻璃般的水光美肌。', usage: '潔面後取2-3滴輕拍全臉，日間使用請防曬。' },
+      { id: 'p15', cat: 'anti', name: '仿生微藻無酸煥膚精華', price: 1480, orig: 1780, spec: '15ml', badge: '無酸低敏', featured: false, img: 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=600&q=80', desc: '零果酸無刺痛脫皮！仿生酵素溫和代謝老廢角質，敏弱肌友善拋光。', usage: '夜間清潔後塗抹於全臉或T區。' },
+      { id: 'p16', cat: 'anti', name: '極補仙氣面膜', price: 249, orig: 300, spec: '25ml / 單片', badge: '急救補水', featured: false, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80', desc: '25ml 微藻高濃縮精華注入羽絲縷膜布，15分鐘敷出透光仙氣肌。', usage: '輕敷15-20分鐘取下，輕拍至吸收。' },
+      { id: 'p17', cat: 'anti', name: '北法黃金藻防曬霜 SPF50+', price: 1080, orig: 1280, spec: '30ml', badge: '高防護力', featured: false, img: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80', desc: '法國黃金海藻抗光老化萃取，清爽水乳質地，全波段防護不泛白。', usage: '出門前15分鐘均勻塗抹於臉部及頸部。' },
+      { id: 'p18', cat: 'anti', name: '地中海粉紅微藻粉底霜 SPF50+', price: 1180, orig: 1380, spec: '30ml', badge: '養膚底妝', featured: false, img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80', desc: '兼具頂級護膚與自然潤色，打造天生好膚質般的粉嫩光澤裸妝。', usage: '基礎保養後取適量以指腹或海綿均勻推開。' },
+      { id: 'p19', cat: 'hair', name: '心生。洗髮精', price: 1580, orig: 1800, spec: '500ml', badge: '回購冠軍', featured: true, img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=600&q=80', desc: '無矽靈天然草本淨化，調理頭皮微生態，洗後髮根自然蓬鬆立體。', usage: '濕髮搓揉起泡按摩頭皮2-3分鐘後沖淨。' },
+      { id: 'p20', cat: 'hair', name: '心生。養髮液 (花調)', price: 1980, orig: 2200, spec: '150ml', badge: '蘊髮必備', featured: true, img: 'https://images.unsplash.com/photo-1608248597359-0f46c645e755?auto=format&fit=crop&w=600&q=80', desc: '活絡滋養髮根毛囊，優雅草花香氛，強健髮根減少斷裂。', usage: '吹乾後均勻噴灑於頭皮分線處輕柔按摩。' },
+      { id: 'p21', cat: 'hair', name: '心生。養髮液 (木調)', price: 1980, orig: 2200, spec: '150ml', badge: '蘊髮必備', featured: false, img: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80', desc: '沉穩雪松木質調，深層控油淨化，給予頭皮純淨深呼吸體驗。', usage: '噴灑於易出油頭皮處，指腹畫圈按壓。' },
+      { id: 'p22', cat: 'hair', name: '心生。護髮精萃', price: 1080, orig: 1300, spec: '120ml', badge: '柔順光澤', featured: false, img: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=600&q=80', desc: '免沖洗絲柔光澤修護，撫平毛躁分岔，對抗吹整高溫熱傷害。', usage: '半乾或造型前滴1-2滴塗抹於髮中至髮尾。' },
+      { id: 'p23', cat: 'body', name: '心宇。沐浴露', price: 1680, orig: 1950, spec: '400ml', badge: '芳香療癒', featured: true, img: 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=600&q=80', desc: '天然純植萃精油調香，在蒸氣中洗去一身疲憊，水潤不緊繃。', usage: '搓揉起泡塗抹全身，享受香氛後沖淨。' },
+      { id: 'p24', cat: 'body', name: '想享草本舒壓能量噴霧', price: 880, orig: 1080, spec: '100ml', badge: '空間療癒', featured: false, img: 'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=600&q=80', desc: '草本芳香精華與能量水調和，隨身淨化氣場，舒緩焦慮回歸平靜。', usage: '距離空間或衣物30公分噴灑2-3下。' }
+    ];
 
-    function renderTabs() {
-      const el = document.getElementById('categoryButtons');
-      el.innerHTML = CATS.map(c => `
-        <button onclick="setCat('${c.id}')" class="px-4 py-2 rounded-full text-xs font-bold transition whitespace-nowrap ${currentCat === c.id ? 'bg-amber-700 text-white' : 'bg-white border text-stone-600'}">
-          ${c.name}
-        </button>
-      `).join('');
+    const STORAGE_KEY = 'joy_enjoy_products_custom_v2';
+    function loadProducts() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      return [...DEFAULT_PRODUCTS];
     }
 
-    function renderList() {
-      const el = document.getElementById('productList');
-      const filtered = PRODUCTS.filter(p => {
+    function saveProducts(list) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      products = list;
+    }
+
+    let products = loadProducts();
+    let currentCat = 'all';
+    let searchQuery = '';
+    let currentMode = 'front';
+
+    function switchView(mode) {
+      currentMode = mode;
+      const front = document.getElementById('view-front');
+      const admin = document.getElementById('view-admin');
+      const text = document.getElementById('toggleModeText');
+      const icon = document.getElementById('toggleModeIcon');
+
+      if (mode === 'front') {
+        front.classList.remove('hidden');
+        admin.classList.add('hidden');
+        text.textContent = '後台管理系統';
+        icon.textContent = '⚙️';
+        renderFront();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        front.classList.add('hidden');
+        admin.classList.remove('hidden');
+        text.textContent = '返回前台展示';
+        icon.textContent = '🏠';
+        renderAdmin();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function toggleMode() {
+      switchView(currentMode === 'front' ? 'admin' : 'front');
+    }
+
+    function renderFront() {
+      renderCategoryTabs();
+      renderProductGrid();
+    }
+
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabs');
+      container.innerHTML = CATEGORIES.map(c => {
+        const count = c.id === 'all' ? products.length : products.filter(p => p.cat === c.id).length;
+        const active = currentCat === c.id;
+        return `
+          <button onclick="setCategory('${c.id}')" class="px-4 py-2.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 whitespace-nowrap shadow-sm ${active ? 'bg-amber-700 text-white shadow-amber-900/20' : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-50'}">
+            <span>${c.name}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full ${active ? 'bg-amber-800 text-amber-100' : 'bg-stone-100 text-stone-500'}">${count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategory(id) {
+      currentCat = id;
+      renderCategoryTabs();
+      renderProductGrid();
+    }
+
+    function renderProductGrid() {
+      const container = document.getElementById('productGrid');
+      const countEl = document.getElementById('productCountLabel');
+      const filtered = products.filter(p => {
         if (currentCat !== 'all' && p.cat !== currentCat) return false;
-        if (keyword && !p.name.includes(keyword) && !p.desc.includes(keyword)) return false;
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          if (!p.name.toLowerCase().includes(q) && !(p.desc || '').toLowerCase().includes(q)) return false;
+        }
         return true;
       });
 
-      el.innerHTML = filtered.map(p => `
-        <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm hover:shadow-md transition p-4 flex flex-col justify-between">
-          <div>
-            <div class="relative aspect-square rounded-xl overflow-hidden bg-stone-100 mb-3">
-              <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover">
-              <span class="absolute top-2 left-2 badge-gold text-[11px] font-bold px-2 py-0.5 rounded-full">${p.badge}</span>
+      countEl.textContent = `共 ${filtered.length} 項商品`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="col-span-full py-16 text-center text-stone-400"><p class="font-medium text-stone-600">查無相關商品</p></div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => `
+        <div class="bg-white rounded-2xl border border-stone-200/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div onclick="openDetailModal('${p.id}')" class="cursor-pointer">
+            <div class="relative aspect-square overflow-hidden bg-stone-100">
+              <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80'"/>
+              <div class="absolute top-2.5 left-2.5 flex flex-col gap-1">
+                ${p.badge ? `<span class="badge-gold text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">${p.badge}</span>` : ''}
+                ${p.featured ? `<span class="bg-stone-900/85 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">✨ 推薦</span>` : ''}
+              </div>
             </div>
-            <div class="text-[11px] text-amber-800 font-semibold mb-0.5">${p.spec}</div>
-            <h4 class="font-bold text-stone-900 text-sm mb-1">${p.name}</h4>
-            <p class="text-stone-500 text-xs line-clamp-2 mb-3">${p.desc}</p>
+            <div class="p-4">
+              <div class="text-[11px] text-amber-800 font-semibold mb-1 flex items-center justify-between">
+                <span>${getCategoryName(p.cat)}</span>
+                <span class="text-stone-400">${p.spec || ''}</span>
+              </div>
+              <h4 class="font-bold text-stone-900 text-sm mb-1.5 group-hover:text-amber-800 transition line-clamp-1">${p.name}</h4>
+              <p class="text-stone-500 text-xs line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
+              <div class="flex items-baseline gap-2 pt-2 border-t border-stone-100">
+                <span class="text-base font-black text-amber-900">NT$ ${p.price.toLocaleString()}</span>
+                ${p.orig && p.orig > p.price ? `<span class="text-xs text-stone-400 line-through">NT$ ${p.orig.toLocaleString()}</span>` : ''}
+              </div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-stone-100 flex items-center justify-between">
-            <span class="font-black text-amber-900 text-base">NT$ ${p.price.toLocaleString()}</span>
-            <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="px-3 py-1.5 bg-amber-700 text-white rounded-lg text-xs font-bold">賣貨便下單</a>
+          <div class="px-4 pb-4 pt-0 flex gap-2">
+            <button onclick="openDetailModal('${p.id}')" class="flex-1 py-2 border border-stone-300 hover:border-amber-700 text-stone-700 hover:text-amber-800 text-xs font-bold rounded-xl transition">圖文詳情</button>
+            <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="px-3.5 py-2 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-xl transition text-center shadow-sm">賣貨便</a>
           </div>
         </div>
       `).join('');
     }
 
-    window.setCat = function(c) { currentCat = c; renderTabs(); renderList(); };
-    document.getElementById('searchInput').addEventListener('input', e => { keyword = e.target.value; renderList(); });
+    function getCategoryName(catId) {
+      const c = CATEGORIES.find(item => item.id === catId);
+      return c ? c.name : '其他品類';
+    }
 
-    renderTabs();
-    renderList();
+    function renderAdmin() {
+      document.getElementById('statTotal').textContent = products.length;
+      document.getElementById('statFeatured').textContent = products.filter(p => p.featured).length;
+      const catFilter = document.getElementById('adminCatFilter');
+      catFilter.innerHTML = `<option value="all">全部分類</option>` + CATEGORIES.filter(c => c.id !== 'all').map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+      renderAdminList();
+    }
+
+    function renderAdminList() {
+      const tbody = document.getElementById('adminTableBody');
+      const catVal = document.getElementById('adminCatFilter').value;
+      const q = (document.getElementById('adminSearchInput').value || '').toLowerCase();
+      const filtered = products.filter(p => {
+        if (catVal !== 'all' && p.cat !== catVal) return false;
+        if (q && !p.name.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-stone-400">尚無符合的商品資料</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(p => `
+        <tr class="hover:bg-amber-50/40 border-b border-stone-200">
+          <td class="px-4 py-3 flex items-center gap-3">
+            <img src="${p.img}" alt="${p.name}" class="w-12 h-12 rounded-lg object-cover bg-stone-100 border border-stone-200 flex-shrink-0" onerror="this.src='https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80'">
+            <div>
+              <div class="font-bold text-stone-900 text-sm">${p.name}</div>
+              <div class="text-xs text-stone-400 truncate max-w-[180px]">${p.desc || ''}</div>
+            </div>
+          </td>
+          <td class="px-4 py-3 text-xs text-stone-600">${getCategoryName(p.cat)}</td>
+          <td class="px-4 py-3 text-xs text-stone-500">${p.spec || '-'}</td>
+          <td class="px-4 py-3 text-sm font-bold text-amber-900 font-mono">NT$ ${p.price.toLocaleString()}</td>
+          <td class="px-4 py-3 text-xs">${p.badge ? `<span class="badge-gold px-2 py-0.5 rounded font-semibold">${p.badge}</span>` : '-'}</td>
+          <td class="px-4 py-3 text-right">
+            <div class="flex items-center justify-end gap-2">
+              <button onclick="editProduct('${p.id}')" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold rounded-lg text-xs transition">✏️ 編輯</button>
+              <button onclick="deleteProduct('${p.id}')" class="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-lg text-xs transition">🗑️ 刪除</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openProductModal(prod = null) {
+      const modal = document.getElementById('productEditModal');
+      const catSelect = document.getElementById('edit-cat');
+      catSelect.innerHTML = CATEGORIES.filter(c => c.id !== 'all').map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+
+      if (prod) {
+        document.getElementById('modalTitle').textContent = '編輯商品圖文：' + prod.name;
+        document.getElementById('edit-id').value = prod.id;
+        document.getElementById('edit-name').value = prod.name || '';
+        document.getElementById('edit-cat').value = prod.cat || 'tools';
+        document.getElementById('edit-price').value = prod.price || 0;
+        document.getElementById('edit-orig').value = prod.orig || '';
+        document.getElementById('edit-spec').value = prod.spec || '';
+        document.getElementById('edit-badge').value = prod.badge || '';
+        document.getElementById('edit-featured').checked = !!prod.featured;
+        document.getElementById('edit-img').value = prod.img || '';
+        document.getElementById('edit-desc').value = prod.desc || '';
+        document.getElementById('edit-usage').value = prod.usage || '';
+        updatePreview(prod.img);
+      } else {
+        document.getElementById('modalTitle').textContent = '新增產品項目';
+        document.getElementById('productForm').reset();
+        document.getElementById('edit-id').value = '';
+        updatePreview('');
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function editProduct(id) {
+      const p = products.find(item => item.id === id);
+      if (p) openProductModal(p);
+    }
+
+    function closeProductModal() {
+      document.getElementById('productEditModal').classList.add('hidden');
+    }
+
+    function updatePreview(url) {
+      const img = document.getElementById('edit-img-preview');
+      img.src = url || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80';
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result;
+        document.getElementById('edit-img').value = base64;
+        updatePreview(base64);
+        alert('照片已成功載入！請點擊表單最下方「確認儲存」完成套用。');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProduct(e) {
+      e.preventDefault();
+      const id = document.getElementById('edit-id').value;
+      const data = {
+        name: document.getElementById('edit-name').value.trim(),
+        cat: document.getElementById('edit-cat').value,
+        price: Number(document.getElementById('edit-price').value) || 0,
+        orig: Number(document.getElementById('edit-orig').value) || 0,
+        spec: document.getElementById('edit-spec').value.trim(),
+        badge: document.getElementById('edit-badge').value.trim(),
+        featured: document.getElementById('edit-featured').checked,
+        img: document.getElementById('edit-img').value.trim() || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80',
+        desc: document.getElementById('edit-desc').value.trim(),
+        usage: document.getElementById('edit-usage').value.trim()
+      };
+
+      if (id) {
+        products = products.map(p => p.id === id ? { ...p, ...data } : p);
+        alert('商品圖文更新成功！');
+      } else {
+        products.unshift({ ...data, id: 'custom-' + Date.now() });
+        alert('新商品新增成功！');
+      }
+
+      saveProducts(products);
+      closeProductModal();
+      renderAdmin();
+      renderFront();
+    }
+
+    function deleteProduct(id) {
+      const p = products.find(item => item.id === id);
+      if (confirm(`確定要刪除「${p ? p.name : '此商品'}」嗎？`)) {
+        products = products.filter(item => item.id !== id);
+        saveProducts(products);
+        renderAdmin();
+        renderFront();
+      }
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify(products, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `joy_enjoy_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      alert('已下載備份 JSON 檔案！');
+    }
+
+    function importData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const list = JSON.parse(evt.target.result);
+          if (Array.isArray(list) && list.length > 0) {
+            saveProducts(list);
+            renderAdmin();
+            renderFront();
+            alert(`成功匯入 ${list.length} 筆商品資料！`);
+          } else { alert('檔案格式不符'); }
+        } catch (err) { alert('匯入失敗：' + err.message); }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetDefaultData() {
+      if (confirm('確定要還原成官方原廠預設的 24 項商品資料嗎？您目前的修改將被覆蓋。')) {
+        saveProducts([...DEFAULT_PRODUCTS]);
+        renderAdmin();
+        renderFront();
+        alert('已恢復官方預設資料！');
+      }
+    }
+
+    function openDetailModal(id) {
+      const p = products.find(item => item.id === id);
+      if (!p) return;
+      const content = document.getElementById('detailModalContent');
+      content.innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+          <div class="rounded-2xl overflow-hidden aspect-square bg-stone-100 border border-stone-200">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="text-xs text-amber-800 font-bold mb-1">${getCategoryName(p.cat)} ｜ ${p.spec || '標準規格'}</div>
+            <h3 class="text-2xl font-black text-stone-900 mb-2">${p.name}</h3>
+            <div class="text-2xl font-black text-amber-900 font-mono mb-4">NT$ ${p.price.toLocaleString()}</div>
+            <div class="text-xs text-stone-600 leading-relaxed mb-4 p-3 bg-stone-50 rounded-xl border border-stone-200">
+              <strong class="text-stone-900 block mb-1">【商品說明】</strong>
+              ${p.desc}
+            </div>
+            ${p.usage ? `
+              <div class="text-xs text-stone-600 leading-relaxed mb-6 p-3 bg-amber-50/50 rounded-xl border border-amber-200">
+                <strong class="text-amber-900 block mb-1">【使用建議】</strong>
+                ${p.usage}
+              </div>
+            ` : ''}
+            <div class="flex gap-2">
+              <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="flex-1 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded-xl text-center shadow">
+                7-11 賣貨便線上訂購
+              </a>
+              <a href="https://page.line.me/368ilvof" target="_blank" class="py-3 px-4 bg-[#06C755] text-white font-bold text-xs rounded-xl text-center shadow">
+                LINE 諮詢
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', e => {
+      searchQuery = e.target.value;
+      renderProductGrid();
+    });
+
+    renderFront();
   </script>
 </body>
 </html>
