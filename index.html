@@ -44,10 +44,15 @@
   <header class="sticky top-0 z-40 glass-header border-b border-stone-200/80 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
       
-      <!-- 品牌 Logo -->
+      <!-- 品牌 Logo (優先讀取倉庫中的 ./Logo.jpg 或 ./Logo.png) -->
       <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 text-white flex items-center justify-center font-black text-xl shadow-md">
-          享
+        <div class="w-11 h-11 rounded-2xl overflow-hidden bg-gradient-to-br from-amber-600 to-amber-800 text-white flex items-center justify-center font-black text-xl shadow-md flex-shrink-0 relative">
+          <img 
+            src="./Logo.jpg" 
+            alt="想享能量美學" 
+            class="w-full h-full object-cover"
+            onerror="this.onerror=null; this.src='./Logo.png'; this.onerror=()=>this.parentElement.innerHTML='<span class=\'font-black text-xl text-white\'>享</span>';"
+          />
         </div>
         <div>
           <span class="text-xs uppercase tracking-widest text-amber-800 font-bold block leading-none">Joy &amp; Enjoy</span>
@@ -163,7 +168,7 @@
       </div>
     </section>
 
-    <!-- 主打代表商品專區 (精選 4 款主打，首頁加載極速！) -->
+    <!-- 主打代表商品專區 (精選 4 款主打，包含本地 ./H_大梳.jpg) -->
     <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
         <div>
@@ -179,10 +184,8 @@
         </button>
       </div>
 
-      <!-- 首頁精選卡片網格 -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7" id="featuredGrid"></div>
 
-      <!-- 查看完整產品大按鈕引導 -->
       <div class="mt-12 text-center">
         <button 
           onclick="navigateTo('catalog')" 
@@ -194,7 +197,7 @@
       </div>
     </section>
 
-    <!-- 系列分類快速入口 (點擊直接進入該系列) -->
+    <!-- 系列分類快速入口 -->
     <section class="py-14 bg-stone-100/60 border-t border-stone-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center max-w-2xl mx-auto mb-10">
@@ -239,18 +242,15 @@
   </main>
 
   <!-- ========================================================= -->
-  <!-- 頁面 2：全系列產品誌分頁 (Catalog - 點選才載入全部商品) -->
+  <!-- 頁面 2：全系列產品誌分頁 (Catalog) -->
   <!-- ========================================================= -->
   <main id="page-catalog" class="hidden min-h-screen py-12 max-w-7xl mx-auto px-4 sm:px-6">
-    
-    <!-- 麵包屑導航 -->
     <div class="flex items-center gap-2 text-xs text-stone-400 mb-6">
       <button onclick="navigateTo('home')" class="hover:text-amber-800">品牌首頁</button>
       <span>/</span>
       <span class="text-amber-900 font-bold">全系列產品圖文誌</span>
     </div>
 
-    <!-- 標題與搜尋列 -->
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
       <div>
         <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Complete Collection</span>
@@ -268,10 +268,8 @@
       </div>
     </div>
 
-    <!-- 分類切換按鈕區 -->
     <div class="flex gap-2 overflow-x-auto pb-4 mb-8" id="categoryTabs"></div>
 
-    <!-- 商品數量統計 -->
     <div class="flex items-center justify-between text-xs text-stone-500 mb-6">
       <span id="productCountLabel">載入中...</span>
       <button onclick="navigateTo('home')" class="text-amber-800 hover:underline">
@@ -279,9 +277,7 @@
       </button>
     </div>
 
-    <!-- 產品網格 (全部商品展示，圖片全加上 lazy loading 延遲載入) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-7" id="productGrid"></div>
-
   </main>
 
   <!-- ========================================================= -->
@@ -343,7 +339,6 @@
       </div>
     </div>
 
-    <!-- 預約與交通指南 -->
     <div class="p-8 bg-stone-900 text-stone-300 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
       <div>
         <h4 class="text-2xl font-bold text-white mb-2">歡迎親臨預約體驗</h4>
@@ -407,7 +402,6 @@
         </div>
       </div>
 
-      <!-- 備份與還原 -->
       <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h4 class="font-bold text-stone-900 text-sm">💾 圖文資料備份與匯出入</h4>
@@ -427,7 +421,6 @@
         </div>
       </div>
 
-      <!-- 產品管理表格 -->
       <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
         <div class="p-4 sm:p-5 border-b border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <h3 class="font-bold text-stone-900 text-base">產品管理清單</h3>
@@ -456,12 +449,17 @@
     </div>
   </section>
 
-  <!-- 頁尾 (Footer) -->
+  <!-- 頁尾 (Footer - 支援本地 Logo) -->
   <footer class="py-12 bg-stone-950 text-stone-400 text-xs border-t border-stone-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-      <div>
-        <h4 class="text-white font-bold text-sm">想享能量美學工作坊 Joy & Enjoy</h4>
-        <p class="mt-1 text-stone-500">高雄市左營區博愛二路646號 (漢神巨蛋正對面) ｜ 週一至週六 11:00-19:30</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl overflow-hidden bg-gradient-to-br from-amber-600 to-amber-800 text-white flex items-center justify-center flex-shrink-0">
+          <img src="./Logo.jpg" alt="Logo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='./Logo.png'; this.onerror=()=>this.parentElement.innerHTML='<span class=\'text-white font-bold text-sm\'>享</span>';">
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm">想享能量美學工作坊 Joy & Enjoy</h4>
+          <p class="mt-0.5 text-stone-500">高雄市左營區博愛二路646號 (漢神巨蛋正對面) ｜ 週一至週六 11:00-19:30</p>
+        </div>
       </div>
       <div class="flex gap-4 text-stone-300">
         <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="hover:text-amber-400">7-11賣貨便</a>
@@ -472,7 +470,7 @@
   </footer>
 
   <!-- ============================================== -->
-  <!-- 產品深度圖文詳情 Modal (多圖切換) -->
+  <!-- 產品深度圖文詳情 Modal -->
   <!-- ============================================== -->
   <div id="detailModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
     <div class="fixed inset-0 bg-stone-950/75 backdrop-blur-sm" onclick="closeDetailModal()"></div>
@@ -513,7 +511,7 @@
               </label>
             </div>
             <div>
-              <label class="block text-[11px] text-stone-500 mb-1">圖片檔名或網址 (每行一個，如 comb1.jpg)：</label>
+              <label class="block text-[11px] text-stone-500 mb-1">圖片檔名或網址 (每行一個，例如 <code>./H_大梳.jpg</code> 或 <code>comb2.jpg</code>)：</label>
               <textarea id="edit-imgs-text" rows="2" oninput="updateImagesFromText(this.value)" class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs font-mono"></textarea>
             </div>
           </div>
@@ -540,7 +538,6 @@
             </div>
           </div>
 
-          <!-- 首頁推薦開關 -->
           <div class="flex items-center gap-2 p-3 bg-amber-50/70 rounded-xl border border-amber-200">
             <input type="checkbox" id="edit-featured" class="w-4 h-4 text-amber-700 rounded border-stone-300">
             <label for="edit-featured" class="text-xs font-bold text-amber-900 cursor-pointer">
@@ -598,8 +595,8 @@
         badge: '明星爆款',
         featured: true, // 首頁主打
         images: [
-          'https://images.unsplash.com/photo-1590159763121-7c9ff3149e0a?auto=format&fit=crop&w=800&q=80',
-          'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80'
+          './H_大梳.jpg', // 本地圖片
+          'https://images.unsplash.com/photo-1590159763121-7c9ff3149e0a?auto=format&fit=crop&w=800&q=80'
         ],
         desc: '專為現代人緊繃頭皮研發，採用頂級高傳導純銅鍍金梳針與天然回彈氣囊。梳齒圓潤貼合頭部穴位，梳壓時深層放鬆緊繃經絡、帶動頭皮氣血循環，天天梳理喚醒蓬鬆豐盈秀髮與清澈思緒。',
         highlights: '高純度純銅鍍金梳針，抗靜電溫潤滑順\n天然橡膠回彈氣墊，柔韌緩衝不傷頭皮\n人體工學木質握柄，溫潤手感久握不累\n高雄漢神巨蛋旗艦店招牌梳壓體驗指定專用梳',
@@ -751,7 +748,7 @@
       }
     ];
 
-    const STORAGE_KEY = 'joy_enjoy_products_spa_v4';
+    const STORAGE_KEY = 'joy_enjoy_products_v5_local';
     function loadProducts() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
