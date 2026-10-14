@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>想享能量美學工作坊 Joy & Enjoy | 官方產品型錄與圖文誌</title>
-  <meta name="description" content="想享能量美學工作坊致力於「給自己的幸福，很簡單」，提供天然植萃、無藥性全方位髮膚護理產品與黃金梳循環體驗。">
+  <title>想享能量美學工作坊 Joy & Enjoy | 官方網站・蘊髮育膚・能量美學</title>
+  <meta name="description" content="想享能量美學工作坊致力於「給自己的幸福，很簡單」，提供天然植萃、無藥性全方位髮膚護理產品與黃金梳循環體驗。高雄漢神巨蛋正對面。">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
@@ -26,6 +26,11 @@
       color: #8c6014;
       border: 1px solid rgba(197, 155, 72, 0.35);
     }
+    .nav-link.active {
+      color: #916828;
+      font-weight: 800;
+      border-bottom: 2px solid #916828;
+    }
   </style>
 </head>
 <body class="text-stone-800 antialiased selection:bg-amber-200 selection:text-amber-900">
@@ -35,12 +40,12 @@
     🌿 想享能量美學 ｜ 蘊髮育膚・能量舒壓・天然植萃 ｜ 高雄市左營區博愛二路646號 (漢神巨蛋正對面)
   </div>
 
-  <!-- 頂部導覽列 -->
+  <!-- 頂部導覽列 (多頁面導航) -->
   <header class="sticky top-0 z-40 glass-header border-b border-stone-200/80 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
       
       <!-- 品牌 Logo -->
-      <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('front')">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
         <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 text-white flex items-center justify-center font-black text-xl shadow-md">
           享
         </div>
@@ -50,33 +55,37 @@
         </div>
       </div>
 
+      <!-- 中間分頁選單 -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-stone-600">
+        <button id="nav-home" onclick="navigateTo('home')" class="nav-link py-2 transition hover:text-amber-800 active">
+          品牌首頁
+        </button>
+        <button id="nav-catalog" onclick="navigateTo('catalog')" class="nav-link py-2 transition hover:text-amber-800">
+          全系列產品誌
+        </button>
+        <button id="nav-salon" onclick="navigateTo('salon')" class="nav-link py-2 transition hover:text-amber-800">
+          門市沙龍預約
+        </button>
+      </nav>
+
       <!-- 右側連結與後台按鈕 -->
-      <div class="flex items-center gap-2.5 sm:gap-3.5">
+      <div class="flex items-center gap-2.5 sm:gap-3">
         <!-- 唯一賣場連結 -->
         <a 
           href="https://myship.7-11.com.tw/general/detail/GM2505047454173" 
           target="_blank" 
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-amber-700 text-white hover:bg-amber-800 transition shadow-sm"
+          class="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 text-xs font-bold rounded-xl bg-amber-700 text-white hover:bg-amber-800 transition shadow-sm"
         >
           <span>🛒</span>
-          <span>官方線上賣場 (7-11賣貨便)</span>
-        </a>
-
-        <!-- 線上預約 -->
-        <a 
-          href="https://joyenjoy.simplybook.asia/" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-white border border-stone-300 text-stone-700 hover:bg-stone-50 transition"
-        >
-          線上預約體驗
+          <span class="hidden sm:inline">官方賣場</span>
+          <span class="sm:hidden">賣場</span>
         </a>
 
         <!-- 前/後台管理切換 -->
         <button 
           id="btnToggleMode"
-          onclick="toggleMode()"
+          onclick="toggleAdminMode()"
           class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-stone-900 text-amber-200 hover:bg-stone-800 shadow"
         >
           <span id="toggleModeIcon">⚙️</span>
@@ -84,124 +93,294 @@
         </button>
       </div>
     </div>
+
+    <!-- 行動版底部快速分頁列 (手機專用) -->
+    <div class="md:hidden flex items-center justify-around border-t border-stone-200 bg-white py-2.5 text-xs font-bold text-stone-600">
+      <button onclick="navigateTo('home')" id="mob-nav-home" class="text-amber-800">品牌首頁</button>
+      <button onclick="navigateTo('catalog')" id="mob-nav-catalog">產品型錄</button>
+      <button onclick="navigateTo('salon')" id="mob-nav-salon">門市預約</button>
+    </div>
   </header>
 
-  <!-- ============================================== -->
-  <!-- 前台產品展示視圖 (Showcase View) -->
-  <!-- ============================================== -->
-  <main id="view-front" class="min-h-screen">
+  <!-- ========================================================= -->
+  <!-- 頁面 1：品牌形象首頁 (Home - 只展示形象、故事與 4 款主打商品) -->
+  <!-- ========================================================= -->
+  <main id="page-home" class="min-h-screen">
 
-    <!-- Hero 品牌精神橫幅 -->
-    <section class="py-14 sm:py-20 bg-gradient-to-b from-amber-50/70 via-stone-50 to-[#FCFBFA]">
+    <!-- Hero 品牌大器形象 -->
+    <section class="py-16 sm:py-24 bg-gradient-to-b from-amber-50/70 via-stone-50 to-[#FCFBFA]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-        <span class="inline-block px-3.5 py-1.5 bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold rounded-full mb-4">
-          天然植萃 × 無藥性 × 環境友善
+        <span class="inline-block px-3.5 py-1.5 bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold rounded-full mb-5">
+          🌿 蘊髮育膚 × 能量舒壓 × 天然植萃
         </span>
-        <h2 class="text-4xl sm:text-5xl font-black text-stone-900 mb-4 tracking-tight leading-tight">
+        <h2 class="text-4xl sm:text-6xl font-black text-stone-900 mb-5 tracking-tight leading-tight">
           給自己的幸福，<span class="text-amber-700">很簡單。</span>
         </h2>
-        <p class="text-stone-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8">
-          我們致力於提供全方位天然髮膚護理產品，結合專利黃金梳經絡梳壓與植萃深層滋養，讓您的肌膚與心靈一體被療癒。
+        <p class="text-stone-600 max-w-2xl mx-auto text-sm sm:text-lg leading-relaxed mb-10">
+          美學是一場由內而外的身心對話。想享能量美學堅持<strong>「天然植萃、無藥性、環境友善」</strong>，結合專利黃金梳經絡調理，讓每一寸頭皮、肌膚與心靈一體被療癒。
         </p>
 
-        <div class="flex flex-wrap justify-center gap-3.5">
-          <a href="#products-section" class="px-6 py-3 bg-stone-900 hover:bg-stone-800 text-white font-bold text-sm rounded-xl shadow transition">
-            瀏覽全系列產品誌
-          </a>
-          <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="px-6 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow transition">
-            前往 7-11 賣貨便線上選購 →
-          </a>
-          <a href="https://page.line.me/368ilvof" target="_blank" class="px-6 py-3 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-sm rounded-xl shadow transition">
-            官方 LINE 諮詢 (@joy.enjoy)
+        <div class="flex flex-wrap justify-center gap-4">
+          <button onclick="navigateTo('catalog')" class="px-7 py-3.5 bg-stone-900 hover:bg-stone-800 text-white font-bold text-sm rounded-xl shadow-lg transition flex items-center gap-2">
+            <span>探索全系列產品誌 (24款)</span>
+            <span>➔</span>
+          </button>
+          <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="px-7 py-3.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-lg transition">
+            7-11 賣貨便線上選購
           </a>
         </div>
       </div>
     </section>
 
-    <!-- 產品型錄與圖文誌專區 -->
-    <section id="products-section" class="py-12 max-w-7xl mx-auto px-4 sm:px-6">
-      
-      <!-- 標題與搜尋列 -->
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-        <div>
-          <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Product Catalog</span>
-          <h3 class="text-2xl sm:text-3xl font-black text-stone-900 mt-0.5">產品展示與圖文專區</h3>
-          <p class="text-stone-500 text-xs mt-1">點擊任意產品卡片，即可展開多張實拍圖與深入圖文介紹。</p>
-        </div>
+    <!-- 三大理念特點 -->
+    <section class="py-14 bg-white border-y border-stone-200/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-6 rounded-2xl bg-[#FCFBFA] border border-stone-200/80">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xl mb-4">🌿</div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">天然植萃・無藥性堅持</h3>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              嚴選天然草本植物萃取與專利微藻酵素，友善人體與環境，敏感頭皮與脆弱肌膚也能安心深層滋養。
+            </p>
+          </div>
 
-        <div class="flex gap-2">
-          <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="搜尋商品名稱、成分或功效..." 
-            class="px-4 py-2.5 bg-white border border-stone-300 rounded-xl text-xs w-full sm:w-64 focus:outline-none focus:border-amber-700 shadow-sm"
-          >
+          <div class="p-6 rounded-2xl bg-[#FCFBFA] border border-stone-200/80">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xl mb-4">✨</div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">專利黃金梳・經絡循環</h3>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              純銅鍍金梳針與高彈力回彈氣墊，精準按摩穴位與放鬆肩頸筋膜，深層釋放現代人累積的高壓疲累。
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-[#FCFBFA] border border-stone-200/80">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xl mb-4">💆</div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">高雄漢神巨蛋・實體旗艦</h3>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              巨蛋正對面靜謐舒心空間，由專業能量師為您規劃專屬的頭皮甦活與肌膚護理儀式。
+            </p>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- 分類切換按鈕區 -->
-      <div class="flex gap-2 overflow-x-auto pb-4 mb-8" id="categoryTabs"></div>
-
-      <!-- 統計與管理捷徑 -->
-      <div class="flex items-center justify-between text-xs text-stone-500 mb-6">
-        <span id="productCountLabel">載入中...</span>
-        <button onclick="switchView('admin')" class="text-amber-800 font-bold hover:underline flex items-center gap-1">
-          ⚙️ 想要新增產品或編輯圖文？進入內容管理 ➔
+    <!-- 主打代表商品專區 (精選 4 款主打，首頁加載極速！) -->
+    <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div>
+          <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Featured Picks</span>
+          <h3 class="text-2xl sm:text-3xl font-black text-stone-900 mt-1">品牌主打代表商品</h3>
+          <p class="text-stone-500 text-xs sm:text-sm mt-1">想享能量美學最具人氣的經典之作</p>
+        </div>
+        <button 
+          onclick="navigateTo('catalog')" 
+          class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 hover:text-amber-900 hover:underline"
+        >
+          查看全系列所有 24 款商品 ➔
         </button>
       </div>
 
-      <!-- 產品網格 (純圖文展示) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-7" id="productGrid"></div>
+      <!-- 首頁精選卡片網格 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7" id="featuredGrid"></div>
 
+      <!-- 查看完整產品大按鈕引導 -->
+      <div class="mt-12 text-center">
+        <button 
+          onclick="navigateTo('catalog')" 
+          class="px-8 py-4 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-2xl shadow-lg hover:shadow-xl transition flex items-center gap-2 mx-auto"
+        >
+          <span>瀏覽全部系列產品圖文誌 (共 24 款)</span>
+          <span>➔</span>
+        </button>
+      </div>
     </section>
 
-    <!-- 實體門市與聯絡資訊 -->
-    <section class="py-14 bg-stone-900 text-stone-300 text-xs mt-12 border-t border-stone-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 rounded-lg bg-amber-600 text-white font-bold flex items-center justify-center text-sm">享</span>
-            <h4 class="text-white font-bold text-base">想享能量美學工作坊</h4>
+    <!-- 系列分類快速入口 (點擊直接進入該系列) -->
+    <section class="py-14 bg-stone-100/60 border-t border-stone-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Categories</span>
+          <h3 class="text-2xl font-black text-stone-900 mt-1">探索專屬能量系列</h3>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div onclick="goToCategory('tools')" class="p-5 bg-white rounded-2xl border border-stone-200 text-center hover:shadow-md hover:border-amber-400 cursor-pointer transition group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">✨</div>
+            <h4 class="font-bold text-sm text-stone-900">黃金梳與工具</h4>
+            <p class="text-stone-400 text-xs mt-1">頭皮循環梳壓</p>
           </div>
-          <p class="leading-relaxed text-stone-400">
-            Joy &amp; Enjoy 能量美學｜蘊髮育膚<br>
-            以天然植萃、純淨無藥性，呵護每一吋頭皮與肌膚。
-          </p>
-        </div>
 
-        <div>
-          <h4 class="text-white font-bold text-sm mb-3">實體旗艦與體驗</h4>
-          <p>地址：高雄市左營區博愛二路 646 號 (漢神巨蛋正對面)</p>
-          <p class="mt-1.5">營業時間：週一 ～ 週六 11:00 - 19:30 (週日公休)</p>
-          <p class="mt-1.5">線上預約系統：<a href="https://joyenjoy.simplybook.asia/" target="_blank" class="text-amber-400 underline">joyenjoy.simplybook.asia</a></p>
-        </div>
+          <div onclick="goToCategory('skin')" class="p-5 bg-white rounded-2xl border border-stone-200 text-center hover:shadow-md hover:border-amber-400 cursor-pointer transition group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">💧</div>
+            <h4 class="font-bold text-sm text-stone-900">天使肌養膚</h4>
+            <p class="text-stone-400 text-xs mt-1">原初純淨呵護</p>
+          </div>
 
-        <div>
-          <h4 class="text-white font-bold text-sm mb-3">官方線上賣場與社群</h4>
-          <p>線上訂購：<a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="text-amber-400 underline font-bold">7-11 賣貨便官方商城 (全館滿1988免運)</a></p>
-          <p class="mt-1.5">官方 LINE：<strong class="text-white">@joy.enjoy</strong></p>
-          <p class="mt-1.5">Instagram：<strong>joy.enjoy.tw</strong></p>
+          <div onclick="goToCategory('anti')" class="p-5 bg-white rounded-2xl border border-stone-200 text-center hover:shadow-md hover:border-amber-400 cursor-pointer transition group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">⚡</div>
+            <h4 class="font-bold text-sm text-stone-900">極致逆時煥膚</h4>
+            <p class="text-stone-400 text-xs mt-1">微藻活萃撫紋</p>
+          </div>
+
+          <div onclick="goToCategory('hair')" class="p-5 bg-white rounded-2xl border border-stone-200 text-center hover:shadow-md hover:border-amber-400 cursor-pointer transition group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🌿</div>
+            <h4 class="font-bold text-sm text-stone-900">心生頭皮髮絲</h4>
+            <p class="text-stone-400 text-xs mt-1">強健毛囊基底</p>
+          </div>
+
+          <div onclick="goToCategory('body')" class="p-5 bg-white rounded-2xl border border-stone-200 text-center hover:shadow-md hover:border-amber-400 cursor-pointer transition group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🛁</div>
+            <h4 class="font-bold text-sm text-stone-900">心宇身體沐浴</h4>
+            <p class="text-stone-400 text-xs mt-1">香氛身心療癒</p>
+          </div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!-- ============================================== -->
-  <!-- 內容管理後台視圖 (Admin Management View) -->
-  <!-- ============================================== -->
-  <section id="view-admin" class="hidden min-h-screen bg-stone-100 pb-24">
+  <!-- ========================================================= -->
+  <!-- 頁面 2：全系列產品誌分頁 (Catalog - 點選才載入全部商品) -->
+  <!-- ========================================================= -->
+  <main id="page-catalog" class="hidden min-h-screen py-12 max-w-7xl mx-auto px-4 sm:px-6">
     
-    <!-- 後台頂部 -->
+    <!-- 麵包屑導航 -->
+    <div class="flex items-center gap-2 text-xs text-stone-400 mb-6">
+      <button onclick="navigateTo('home')" class="hover:text-amber-800">品牌首頁</button>
+      <span>/</span>
+      <span class="text-amber-900 font-bold">全系列產品圖文誌</span>
+    </div>
+
+    <!-- 標題與搜尋列 -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <div>
+        <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Complete Collection</span>
+        <h3 class="text-3xl font-black text-stone-900 mt-1">想享能量美學全品項</h3>
+        <p class="text-stone-500 text-xs sm:text-sm mt-1">全系列植萃髮膚養護與能量舒壓工具，點擊卡片可深入檢視多張細節圖與圖文。</p>
+      </div>
+
+      <div class="flex gap-2">
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="搜尋商品名稱、成分或功效..." 
+          class="px-4 py-2.5 bg-white border border-stone-300 rounded-xl text-xs w-full sm:w-64 focus:outline-none focus:border-amber-700 shadow-sm"
+        >
+      </div>
+    </div>
+
+    <!-- 分類切換按鈕區 -->
+    <div class="flex gap-2 overflow-x-auto pb-4 mb-8" id="categoryTabs"></div>
+
+    <!-- 商品數量統計 -->
+    <div class="flex items-center justify-between text-xs text-stone-500 mb-6">
+      <span id="productCountLabel">載入中...</span>
+      <button onclick="navigateTo('home')" class="text-amber-800 hover:underline">
+        ← 返回品牌首頁
+      </button>
+    </div>
+
+    <!-- 產品網格 (全部商品展示，圖片全加上 lazy loading 延遲載入) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-7" id="productGrid"></div>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- 頁面 3：門市沙龍預約專頁 (Salon Services) -->
+  <!-- ========================================================= -->
+  <main id="page-salon" class="hidden min-h-screen py-12 max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center gap-2 text-xs text-stone-400 mb-6">
+      <button onclick="navigateTo('home')" class="hover:text-amber-800">品牌首頁</button>
+      <span>/</span>
+      <span class="text-amber-900 font-bold">門市預約體驗</span>
+    </div>
+
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Salon Rituals</span>
+      <h3 class="text-3xl sm:text-4xl font-black text-stone-900 mt-1 mb-3">親臨想享能量美學沙龍</h3>
+      <p class="text-stone-500 text-sm leading-relaxed">
+        位於高雄漢神巨蛋正對面，給自己一場深層舒壓的頭皮與肌膚能量巡禮。
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="p-7 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-bold text-amber-800">明星招牌</span>
+          <h4 class="text-xl font-bold text-stone-900 mt-1 mb-2">「黃金梳」頭皮甦活梳壓體驗</h4>
+          <p class="text-stone-600 text-xs leading-relaxed mb-4">
+            運用高傳導純銅鍍金針深層按摩百會穴與督脈經絡，舒緩頭皮緊繃，喚醒清爽思緒。
+          </p>
+        </div>
+        <a href="https://joyenjoy.simplybook.asia/" target="_blank" class="block w-full py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded-xl text-center shadow transition">
+          線上預約排程 →
+        </a>
+      </div>
+
+      <div class="p-7 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-bold text-amber-800">頭皮調理</span>
+          <h4 class="text-xl font-bold text-stone-900 mt-1 mb-2">蘊髮育膚深層循環療程</h4>
+          <p class="text-stone-600 text-xs leading-relaxed mb-4">
+            以心生植萃精華深層淨化毛囊油脂角質，補充毛囊多肽營養，平衡頭皮微生態。
+          </p>
+        </div>
+        <a href="https://joyenjoy.simplybook.asia/" target="_blank" class="block w-full py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded-xl text-center shadow transition">
+          線上預約排程 →
+        </a>
+      </div>
+
+      <div class="p-7 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-bold text-amber-800">深層注水</span>
+          <h4 class="text-xl font-bold text-stone-900 mt-1 mb-2">天使肌能量注水深層護理</h4>
+          <p class="text-stone-600 text-xs leading-relaxed mb-4">
+            結合七重玻尿酸與微藻酵素代謝，撫平乾燥暗沉，重現飽滿透亮的水光肌。
+          </p>
+        </div>
+        <a href="https://joyenjoy.simplybook.asia/" target="_blank" class="block w-full py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded-xl text-center shadow transition">
+          線上預約排程 →
+        </a>
+      </div>
+    </div>
+
+    <!-- 預約與交通指南 -->
+    <div class="p-8 bg-stone-900 text-stone-300 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h4 class="text-2xl font-bold text-white mb-2">歡迎親臨預約體驗</h4>
+        <p class="text-xs text-stone-400 mb-4 leading-relaxed">
+          門市地址：高雄市左營區博愛二路646號 (漢神巨蛋購物廣場正對面)<br>
+          營業時間：週一至週六 11:00 - 19:30 (週日公休)
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://joyenjoy.simplybook.asia/" target="_blank" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs rounded-xl transition">
+            線上系統預約
+          </a>
+          <a href="https://page.line.me/368ilvof" target="_blank" class="px-5 py-2.5 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs rounded-xl transition">
+            LINE 專人諮詢 (@joy.enjoy)
+          </a>
+        </div>
+      </div>
+      <div class="text-xs space-y-2 text-stone-400">
+        <p>🚇 <strong>交通指引：</strong>搭乘高雄捷運紅線至「巨蛋站」，出站徒步即可抵達。</p>
+        <p>🛍️ <strong>實體諮詢：</strong>現場提供全系列產品試香、質地體驗與黃金梳親身試梳服務。</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- 頁面 4：內容管理後台 (Admin View) -->
+  <!-- ========================================================= -->
+  <section id="page-admin" class="hidden min-h-screen bg-stone-100 pb-24">
     <div class="bg-white border-b border-stone-200 py-6 px-4 sm:px-8">
       <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span class="inline-block px-2.5 py-0.5 bg-amber-100 text-amber-900 rounded text-xs font-bold mb-1">內容維護中心</span>
-          <h2 class="text-2xl font-black text-stone-900">想享能量美學 - 產品圖文管理系統</h2>
-          <p class="text-stone-500 text-xs mt-0.5">您可以隨時新增產品、編輯詳細圖文，並設定多張商品實拍照。</p>
+          <h2 class="text-2xl font-black text-stone-900">想享能量美學 - 產品圖文管理</h2>
+          <p class="text-stone-500 text-xs mt-0.5">您可以隨時新增產品、編輯詳細圖文，並勾選「設為主打代表品項」顯示在首頁！</p>
         </div>
         <div class="flex flex-wrap items-center gap-2.5">
-          <button onclick="switchView('front')" class="px-4 py-2 bg-white border border-stone-300 text-stone-700 font-bold text-xs rounded-xl hover:bg-stone-50 transition">
-            ← 返回前台展示
+          <button onclick="navigateTo('home')" class="px-4 py-2 bg-white border border-stone-300 text-stone-700 font-bold text-xs rounded-xl hover:bg-stone-50 transition">
+            ← 返回品牌首頁
           </button>
           <button onclick="openProductModal()" class="px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded-xl shadow transition">
             ➕ 新增產品圖文
@@ -210,17 +389,14 @@
       </div>
     </div>
 
-    <!-- 後台主功能區 -->
     <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-8 space-y-6">
-
-      <!-- 統計數據 -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
           <div class="text-xs text-stone-500 font-medium">展示產品總數</div>
           <div id="statTotal" class="text-3xl font-black text-stone-900 mt-1">0</div>
         </div>
         <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
-          <div class="text-xs text-stone-500 font-medium">招牌精選品項</div>
+          <div class="text-xs text-stone-500 font-medium">首頁主打推薦商品</div>
           <div id="statFeatured" class="text-3xl font-black text-amber-800 mt-1">0</div>
         </div>
         <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
@@ -231,7 +407,7 @@
         </div>
       </div>
 
-      <!-- 備份與還原工具列 -->
+      <!-- 備份與還原 -->
       <div class="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h4 class="font-bold text-stone-900 text-sm">💾 圖文資料備份與匯出入</h4>
@@ -251,10 +427,10 @@
         </div>
       </div>
 
-      <!-- 產品表格 -->
+      <!-- 產品管理表格 -->
       <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
         <div class="p-4 sm:p-5 border-b border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <h3 class="font-bold text-stone-900 text-base">產品列表清單</h3>
+          <h3 class="font-bold text-stone-900 text-base">產品管理清單</h3>
           <div class="flex gap-2">
             <select id="adminCatFilter" onchange="renderAdminList()" class="px-3 py-1.5 bg-stone-50 border border-stone-300 rounded-lg text-xs"></select>
             <input type="text" id="adminSearchInput" oninput="renderAdminList()" placeholder="搜尋品名..." class="px-3 py-1.5 bg-stone-50 border border-stone-300 rounded-lg text-xs">
@@ -265,11 +441,11 @@
           <table class="w-full text-left border-collapse text-sm">
             <thead>
               <tr class="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-500 uppercase tracking-wider">
-                <th class="px-4 py-3">產品主圖與名稱</th>
+                <th class="px-4 py-3">產品圖片與品名</th>
                 <th class="px-4 py-3">分類</th>
-                <th class="px-4 py-3">規格容量</th>
+                <th class="px-4 py-3">規格</th>
+                <th class="px-4 py-3">首頁主打</th>
                 <th class="px-4 py-3">多圖數量</th>
-                <th class="px-4 py-3">特色標籤</th>
                 <th class="px-4 py-3 text-right">操作</th>
               </tr>
             </thead>
@@ -277,142 +453,127 @@
           </table>
         </div>
       </div>
-
     </div>
   </section>
 
+  <!-- 頁尾 (Footer) -->
+  <footer class="py-12 bg-stone-950 text-stone-400 text-xs border-t border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <div>
+        <h4 class="text-white font-bold text-sm">想享能量美學工作坊 Joy & Enjoy</h4>
+        <p class="mt-1 text-stone-500">高雄市左營區博愛二路646號 (漢神巨蛋正對面) ｜ 週一至週六 11:00-19:30</p>
+      </div>
+      <div class="flex gap-4 text-stone-300">
+        <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="hover:text-amber-400">7-11賣貨便</a>
+        <a href="https://joyenjoy.simplybook.asia/" target="_blank" class="hover:text-amber-400">線上預約</a>
+        <a href="https://page.line.me/368ilvof" target="_blank" class="hover:text-amber-400">LINE客服</a>
+      </div>
+    </div>
+  </footer>
+
   <!-- ============================================== -->
-  <!-- 產品深度圖文詳情 Modal (支援多圖輪播切換) -->
+  <!-- 產品深度圖文詳情 Modal (多圖切換) -->
   <!-- ============================================== -->
   <div id="detailModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
     <div class="fixed inset-0 bg-stone-950/75 backdrop-blur-sm" onclick="closeDetailModal()"></div>
-
     <div class="min-h-full flex items-center justify-center p-3 sm:p-6">
       <div class="relative bg-white rounded-3xl max-w-4xl w-full shadow-2xl border border-stone-200 overflow-hidden z-10 p-6 sm:p-8">
-        
-        <!-- 關閉按鈕 -->
-        <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center font-bold">
-          ✕
-        </button>
-
+        <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center font-bold">✕</button>
         <div id="detailModalContent"></div>
-
       </div>
     </div>
   </div>
 
   <!-- ============================================== -->
-  <!-- 產品新增/編輯 Modal (支援多張照片設定) -->
+  <!-- 產品新增/編輯 Modal -->
   <!-- ============================================== -->
   <div id="productEditModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
     <div class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm" onclick="closeProductModal()"></div>
-
     <div class="min-h-full flex items-center justify-center p-4">
       <div class="relative bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-stone-200 overflow-hidden z-10">
-        
         <div class="p-5 border-b border-stone-200 flex items-center justify-between">
-          <div>
-            <h3 id="modalTitle" class="font-bold text-stone-900 text-lg">編輯產品圖文</h3>
-            <p class="text-stone-500 text-xs">可設定多張商品照片（支援本機上傳或輸入檔名/網址）</p>
-          </div>
+          <h3 id="modalTitle" class="font-bold text-stone-900 text-lg">編輯產品圖文</h3>
           <button onclick="closeProductModal()" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center font-bold">✕</button>
         </div>
 
         <form id="productForm" onsubmit="saveProduct(event)" class="p-5 sm:p-6 space-y-4 max-h-[75vh] overflow-y-auto">
           <input type="hidden" id="edit-id">
 
-          <!-- 多圖設定區塊 -->
+          <!-- 多圖設定 -->
           <div class="p-4 bg-amber-50/60 rounded-2xl border border-amber-200 space-y-3">
             <div class="flex items-center justify-between">
-              <label class="block text-xs font-bold text-amber-900">📸 產品圖片設定 (支援多張圖片)</label>
-              <span class="text-[11px] text-amber-800">可多選檔案或填寫圖片網址</span>
+              <label class="block text-xs font-bold text-amber-900">📸 產品圖片設定 (支援多張照片)</label>
+              <button type="button" onclick="clearEditImages()" class="text-xs text-red-600 underline">清空圖片</button>
             </div>
-
-            <!-- 縮圖預覽列 -->
             <div id="edit-images-preview-row" class="flex gap-2 overflow-x-auto py-1"></div>
-
-            <div class="space-y-2">
-              <div class="flex flex-wrap items-center gap-2">
-                <label class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm transition">
-                  📂 從電腦加入照片 (可多次選取)
-                  <input type="file" accept="image/*" multiple class="hidden" onchange="handleMultipleFileUpload(event)">
-                </label>
-                <button type="button" onclick="clearEditImages()" class="px-3 py-2 bg-white border border-stone-300 text-stone-600 hover:text-red-600 text-xs font-semibold rounded-xl">
-                  清空圖片
-                </button>
-              </div>
-
-              <div>
-                <label class="block text-[11px] text-stone-500 mb-1">
-                  圖片網址清單 (每行填寫一個網址或檔名，例如 <code>comb1.jpg</code> 或完整網址)：
-                </label>
-                <textarea 
-                  id="edit-imgs-text" 
-                  rows="3" 
-                  placeholder="comb1.jpg&#10;comb2.jpg" 
-                  oninput="updateImagesFromText(this.value)"
-                  class="w-full px-3 py-2 bg-white border border-stone-300 rounded-lg text-xs font-mono focus:outline-none focus:border-amber-700"
-                ></textarea>
-              </div>
+            <div>
+              <label class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm transition">
+                📂 從電腦加入照片
+                <input type="file" accept="image/*" multiple class="hidden" onchange="handleMultipleFileUpload(event)">
+              </label>
+            </div>
+            <div>
+              <label class="block text-[11px] text-stone-500 mb-1">圖片檔名或網址 (每行一個，如 comb1.jpg)：</label>
+              <textarea id="edit-imgs-text" rows="2" oninput="updateImagesFromText(this.value)" class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs font-mono"></textarea>
             </div>
           </div>
 
-          <!-- 基本欄位 (無價格) -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-bold text-stone-700 mb-1">產品名稱 *</label>
-              <input type="text" id="edit-name" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700">
+              <input type="text" id="edit-name" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm">
             </div>
             <div>
               <label class="block text-xs font-bold text-stone-700 mb-1">所屬分類 *</label>
-              <select id="edit-cat" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></select>
+              <select id="edit-cat" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm"></select>
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-bold text-stone-700 mb-1">規格容量 (如：120ml 或 單支裝)</label>
-              <input type="text" id="edit-spec" placeholder="120ml" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700">
+              <input type="text" id="edit-spec" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm">
             </div>
             <div>
-              <label class="block text-xs font-bold text-stone-700 mb-1">特色標籤徽章 (如：明星爆款、溫和無藥性)</label>
-              <input type="text" id="edit-badge" placeholder="明星爆款" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700">
+              <label class="block text-xs font-bold text-stone-700 mb-1">特色標籤徽章 (如：明星爆款)</label>
+              <input type="text" id="edit-badge" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm">
             </div>
           </div>
 
-          <div class="flex items-center gap-2 p-3 bg-stone-50 rounded-xl border border-stone-200">
+          <!-- 首頁推薦開關 -->
+          <div class="flex items-center gap-2 p-3 bg-amber-50/70 rounded-xl border border-amber-200">
             <input type="checkbox" id="edit-featured" class="w-4 h-4 text-amber-700 rounded border-stone-300">
-            <label for="edit-featured" class="text-xs font-bold text-stone-700 cursor-pointer">設為首頁推薦代表品項 (Featured)</label>
-          </div>
-
-          <!-- 詳細圖文內容 -->
-          <div>
-            <label class="block text-xs font-bold text-stone-700 mb-1">產品簡介與設計理念</label>
-            <textarea id="edit-desc" rows="3" placeholder="詳細描述產品特性與療癒理念..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></textarea>
+            <label for="edit-featured" class="text-xs font-bold text-amber-900 cursor-pointer">
+              🌟 設為首頁主打代表商品 (只在首頁顯示少數精選主打)
+            </label>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-stone-700 mb-1">核心功效與特點亮點 (每行一項)</label>
-            <textarea id="edit-highlights" rows="2" placeholder="純銅鍍金梳針，深層循環&#10;天然植萃無藥性添加" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></textarea>
+            <label class="block text-xs font-bold text-stone-700 mb-1">產品介紹與理念</label>
+            <textarea id="edit-desc" rows="3" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">核心亮點 (每行一項)</label>
+            <textarea id="edit-highlights" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm"></textarea>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-bold text-stone-700 mb-1">建議使用方式 / 日常儀式</label>
-              <textarea id="edit-usage" rows="2" placeholder="每日早晚輕柔梳理3-5分鐘..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></textarea>
+              <label class="block text-xs font-bold text-stone-700 mb-1">建議使用方式</label>
+              <textarea id="edit-usage" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm"></textarea>
             </div>
             <div>
-              <label class="block text-xs font-bold text-stone-700 mb-1">植萃與核心成份</label>
-              <textarea id="edit-ingredients" rows="2" placeholder="迷迭香萃取、藍藻酵素..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-amber-700"></textarea>
+              <label class="block text-xs font-bold text-stone-700 mb-1">核心成分</label>
+              <textarea id="edit-ingredients" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-sm"></textarea>
             </div>
           </div>
 
           <div class="pt-4 border-t border-stone-200 flex justify-end gap-3">
-            <button type="button" onclick="closeProductModal()" class="px-4 py-2 border border-stone-300 rounded-xl text-xs font-bold hover:bg-stone-50">取消</button>
+            <button type="button" onclick="closeProductModal()" class="px-4 py-2 border border-stone-300 rounded-xl text-xs font-bold">取消</button>
             <button type="submit" class="px-6 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold shadow">確認儲存</button>
           </div>
         </form>
-
       </div>
     </div>
   </div>
@@ -435,10 +596,10 @@
         name: '黃金梳。大梳',
         spec: '單支裝 (大)',
         badge: '明星爆款',
-        featured: true,
+        featured: true, // 首頁主打
         images: [
-          './H_大梳.jpg',
-          './H_大梳2.jpg'
+          'https://images.unsplash.com/photo-1590159763121-7c9ff3149e0a?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80'
         ],
         desc: '專為現代人緊繃頭皮研發，採用頂級高傳導純銅鍍金梳針與天然回彈氣囊。梳齒圓潤貼合頭部穴位，梳壓時深層放鬆緊繃經絡、帶動頭皮氣血循環，天天梳理喚醒蓬鬆豐盈秀髮與清澈思緒。',
         highlights: '高純度純銅鍍金梳針，抗靜電溫潤滑順\n天然橡膠回彈氣墊，柔韌緩衝不傷頭皮\n人體工學木質握柄，溫潤手感久握不累\n高雄漢神巨蛋旗艦店招牌梳壓體驗指定專用梳',
@@ -451,14 +612,11 @@
         name: '黃金梳。愛心梳',
         spec: '便攜款',
         badge: '隨身舒壓',
-        featured: true,
-        images: [
-          './H_小梳.jpg',
-          './H_小梳2.jpg'
-        ],
-        desc: '小巧精緻的愛心流線人體工學設計，一手掌握剛剛好。隨身攜帶無論在辦公室、車上或出差，隨時梳壓頭皮、刮撫肩頸與下顎線條，舒緩整日久坐與低頭累積的沉重感。',
+        featured: false,
+        images: ['https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80'],
+        desc: '小巧精緻的愛心流線人體工學設計，一手掌握剛剛好。隨身攜帶無論在辦公室、車上或出差，隨時梳壓頭皮、刮撫肩頸與下顎線條。',
         highlights: '精緻愛心造型，貼合手掌與臉頰肩頸弧度\n純銅鍍金梳針加強局部穴位點壓刺激\n輕巧便攜，隨身化妝包必備減壓神器',
-        usage: '握於掌心，可用愛心弧度輕刮肩頸、鎖骨筋膜，或以針面輕壓太陽穴、後枕部進行提神放鬆。',
+        usage: '握於掌心，可用愛心弧度輕刮肩頸、鎖骨筋膜，或以針面輕壓太陽穴放鬆。',
         ingredients: '純銅鍍金針、高彈性氣囊底座、耐磨握座'
       },
       {
@@ -467,14 +625,11 @@
         name: '黃金梳組合。大梳＆小梳',
         spec: '禮盒雙入',
         badge: '經典禮盒',
-        featured: true,
-        images: [
-          './H_大小組.jpg',
-          './H_大小組2.jpg'
-        ],
-        desc: '大梳守護居家深層養護，小梳貼心隨身帶著走！典雅禮盒包裝，送禮自用皆顯心意。一次擁有兩種專業梳理體驗，全方位呵護秀髮與緊繃身心。',
-        highlights: '大梳深層梳壓全頭經絡，小梳精準點壓肩頸\n專屬想享能量美學典雅燙金包裝\n全方位居家放鬆與隨身提神必備',
-        usage: '早晨使用大梳甦活頭皮精神，日間忙碌時以愛心梳按壓肩頸放鬆，夜間再以大梳深層梳壓助眠。',
+        featured: false,
+        images: ['https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80'],
+        desc: '大梳守護居家深層養護，小梳貼心隨身帶著走！典雅禮盒包裝，全方位呵護秀髮與緊繃身心。',
+        highlights: '大梳深層梳壓全頭經絡，小梳精準點壓肩頸\n專屬想享能量美學典雅燙金包裝',
+        usage: '早晨使用大梳甦活頭皮，日間以愛心梳按壓肩頸放鬆。',
         ingredients: '大黃金梳1支、愛心黃金梳1支、專屬防塵布套'
       },
       {
@@ -484,24 +639,11 @@
         spec: '130ml',
         badge: '溫和清潔',
         featured: false,
-        images: ['./T_B2原初潔膚蜜.jpg'],
-        desc: '給脆弱與疲憊肌膚最原初的純淨呵護。親水親油凝蜜質地，能溫和溶解彩妝、多餘油脂與環境髒污，洗後肌膚不緊繃不乾澀，維持水潤透亮的天然原生肌底。',
-        highlights: '凝蜜親膚質地，減少手部拉扯與摩擦\n溫和胺基酸潔淨配方，不破壞天然脂質屏障\n洗後柔嫩透亮，為後續保養開啟通道',
-        usage: '手乾臉乾取適量於全臉輕柔打圈溶解髒污與殘妝，加水乳化後以溫水洗淨即可。',
-        ingredients: '溫和胺基酸界面活性劑、多重植萃保濕精華、洋甘菊舒緩精萃'
-      },
-      {
-        id: 'p5',
-        cat: 'skin',
-        name: '天使肌☆柔嫩潔膚乳',
-        spec: '120ml',
-        badge: '敏弱肌友善',
-        featured: false,
-        images: ['./T_B1潔膚乳.jpg'],
-        desc: '如雲朵般細緻柔和的潔膚乳，專為乾性、敏感與換季不適肌膚打造。輕柔帶走老廢角質，保留豐沛水份，洗臉就像一場溫柔的 SPA 享受。',
-        highlights: '超低刺激無藥性純淨配方\n保濕精華級洗感，洗後水潤不緊繃\n平衡肌膚健康弱酸性環境',
-        usage: '取適量於掌心加少許水搓揉起泡，輕柔在臉部打圈按摩60秒後，以清水徹底沖淨。',
-        ingredients: '水解蠶絲蛋白、神經醯胺複方、有機蘆薈精萃'
+        images: ['https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80'],
+        desc: '給脆弱與疲憊肌膚最原初的純淨呵護。親水親油凝蜜質地，溫和溶解髒污，洗後不緊繃不乾澀。',
+        highlights: '凝蜜親膚質地，減少手部摩擦\n溫和胺基酸潔淨配方，不傷角質屏障',
+        usage: '手乾臉乾取適量按摩溶解髒污，加水乳化後洗淨。',
+        ingredients: '溫和胺基酸界面活性劑、多重植萃保濕精華'
       },
       {
         id: 'p6',
@@ -509,25 +651,12 @@
         name: '天使肌☆全效保濕淨化水',
         spec: '120ml',
         badge: '基底補水',
-        featured: true,
-        images: ['./T_B3保濕淨化.jpg'],
-        desc: '極致輕盈的水感滲透力，瞬間為乾渴肌底注入豐沛活水。調理毛孔水油平衡，舒緩外在環境引起的泛紅與敏弱，讓肌膚重現晶瑩澄澈的水潤健康光澤。',
-        highlights: '微分子滲透技術，直達角質深層\n長效補水保濕，改善外油內乾問題\n可日常輕拍亦可局部濕敷急救',
-        usage: '早晚潔面後，取適量倒於化妝棉或掌心，均勻輕拍於臉部及頸部肌膚直至完全吸收。',
-        ingredients: '小分子玻尿酸、金縷梅淨化植萃、大馬士革玫瑰純露'
-      },
-      {
-        id: 'p7',
-        cat: 'skin',
-        name: '天使肌☆全效修護精華乳',
-        spec: '120ml',
-        badge: '修護鎖水',
         featured: false,
-        images: ['./T_B4修護精華.jpg'],
-        desc: '輕盈乳液質地，一抹融化化為細緻保護膜。深層鎖住精華水份，修護因壓力與外界刺激受損的肌膚屏障，讓臉龐呈現飽滿彈力與絲緞般的柔滑觸感。',
-        highlights: '水乳交融質地，清爽好吸收不悶黏\n強化表皮屏障防禦力\n四季皆宜的日常全能修護精華乳',
-        usage: '於淨化水或精華液後，取1-2泵均勻塗抹於全臉與頸部，由內而外輕柔提拉按摩。',
-        ingredients: '植物角鯊烷、積雪草苷修護因子、維他命B5、乳木果油'
+        images: ['https://images.unsplash.com/photo-1608248597359-0f46c645e755?auto=format&fit=crop&w=800&q=80'],
+        desc: '極致輕盈的水感滲透力，調理毛孔油水平衡，舒緩外在環境引起的泛紅與敏弱。',
+        highlights: '微分子滲透技術，直達角質深層\n長效補水保濕，改善外油內乾問題',
+        usage: '早晚潔面後輕拍於全臉至吸收。',
+        ingredients: '小分子玻尿酸、金縷梅純露'
       },
       {
         id: 'p8',
@@ -535,25 +664,12 @@
         name: '天使肌☆炫麗七重保濕精華液',
         spec: '30ml',
         badge: '頂級奢寵',
-        featured: true,
-        images: ['./T_Bb5七重保濕.jpg'],
-        desc: '結合七種不同分子量的高純度玻尿酸，建立由外而內的立體鎖水網絡。高濃縮能量精萃，快速淡化乾燥細紋，賦予臉部宛如打了水光針般的通透澎潤光芒。',
-        highlights: '七重多維玻尿酸矩陣，層層滲透補水\n喚醒暗沉疲憊肌膚生命力\n無酒精、無色素、無爭議性防腐劑',
-        usage: '於淨化水後，取3-4滴均勻塗抹於臉部，以指腹輕輕按壓吸收，感受瞬間爆水的滋潤感。',
-        ingredients: '七重玻尿酸複合配方、海藻醣、聚麩胺酸、甘草酸二鉀'
-      },
-      {
-        id: 'p9',
-        cat: 'skin',
-        name: '天使肌☆ RE 頂級安瓶',
-        spec: '50ml',
-        badge: '尊榮旗艦',
-        featured: true,
-        images: ['./T_RE抗老.jpg'],
-        desc: '想享能量美學最高奢頂級之作！極致濃縮再生能量，專為抗衰逆齡、重塑緊緻輪廓量身打造。給予肌膚前所未有的煥變體驗，重現青春時光的天使肌膚奇蹟。',
-        highlights: '奢華珍稀賦活活性因子，密集修護時光痕跡\n顯著提升肌膚緊緻度與回彈彈力\nVIP 尊榮沙龍護理指定壓軸精華',
-        usage: '夜間深度保養時，取適量滴於手心溫熱後均勻按壓於臉部及頸部，搭配向上提拉手法深層導入。',
-        ingredients: '高濃度寡肽複合生長因子、稀有微藻賦活萃取、六胜肽、深海魚子精華'
+        featured: true, // 首頁主打
+        images: ['https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=800&q=80'],
+        desc: '結合七種不同分子量的高純度玻尿酸，建立立體鎖水網絡。淡化乾燥細紋，賦予臉部澎潤透亮的天使光芒。',
+        highlights: '七重多維玻尿酸矩陣，層層滲透補水\n喚醒暗沉疲憊肌膚生命力\n無酒精、無色素純淨配方',
+        usage: '於淨化水後取適量均勻輕按臉部至吸收。',
+        ingredients: '七重玻尿酸複合配方、海藻醣、聚麩胺酸'
       },
       {
         id: 'p10',
@@ -561,25 +677,12 @@
         name: '極透藍藻洗卸慕斯',
         spec: '100ml',
         badge: '人氣新品',
-        featured: true,
-        images: ['./S_洗卸慕斯.jpg'],
-        desc: '一按即出微胞泡沫，深入毛孔深層帶走髒污與殘留底妝。富含專利藍藻萃取，洗臉同時補水抗氧化，洗後肌膚晶亮透徹、不乾澀不假滑。',
-        highlights: '超綿密彈力微米泡沫，減少手部直接摩擦\n珍貴藍藻精萃，抵禦環境壓力與氧化\n洗卸合一，日常防曬與淡妝一瓶搞定',
-        usage: '按壓2-3下豐盈泡沫於微濕臉部，輕輕畫圓按摩約30-45秒，再以溫水沖洗乾淨。',
-        ingredients: '藍藻萃取液、天然氨基酸潔膚因子、海洋深層微量元素'
-      },
-      {
-        id: 'p11',
-        cat: 'anti',
-        name: '肌因逆時極光露',
-        spec: '100ml',
-        badge: '拋光神器',
         featured: false,
-        images: ['./S_肌因逆時.jpg'],
-        desc: '如晨曦露水般清透的微藻活膚露，天天溫和調理暗沉角質與粗大毛孔。讓暗淡無光的肌膚重獲透光率，煥發晶瑩剔透的極光光澤。',
-        highlights: '微藻煥膚能量，溫和代謝老廢角質\n調理肌膚油脂，平滑顆粒粗糙感\n打造通透發光的極光玻璃肌感',
-        usage: '潔面後取適量倒於化妝棉上，輕輕擦拭全臉角質較厚部位（如T字），再輕拍全臉至吸收。',
-        ingredients: '極光微藻發酵濾液、菸鹼醯胺 (維他命B3)、金縷梅純露'
+        images: ['https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80'],
+        desc: '一按即出微胞泡沫，深入毛孔帶走髒污，藍藻活萃洗後水潤透亮不緊繃。',
+        highlights: '超綿密彈力微米泡沫\n珍貴藍藻精萃抗氧化\n洗卸合一，日常淡妝一瓶搞定',
+        usage: '按壓2-3下泡沫輕柔按摩臉部後沖淨。',
+        ingredients: '藍藻萃取液、天然氨基酸潔膚因子'
       },
       {
         id: 'p12',
@@ -587,90 +690,12 @@
         name: '喚顏逆時緊緻精萃',
         spec: '30ml',
         badge: '緊緻撫紋',
-        featured: true,
-        images: ['./S_喚顏緊緻.jpg'],
-        desc: '富含高抗氧活性微藻精萃與緊緻四胜肽，深入撫平細紋與表情紋，提升臉部緊實飽滿度。給予肌膚澎彈緊緻的逆時能量，綻放年輕自信光彩。',
-        highlights: '濃縮緊緻胜肽，撫平乾燥細紋\n質地清透絲滑好延展，極佳吸收度\n結合筋膜提拉按摩效果加乘',
-        usage: '早晚化妝水後，取3滴塗抹於臉部，順著下顎線往耳後輕揉提拉。',
-        ingredients: '四胜肽抗老因子、紅藻賦活素、輔酶Q10、水解彈性蛋白'
-      },
-      {
-        id: 'p13',
-        cat: 'anti',
-        name: '全效柔嫩逆時多肽霜',
-        spec: '30ml',
-        badge: '賦活滋養',
         featured: false,
-        images: ['./S_逆時多肽.jpg'],
-        desc: '如天鵝絨般奢華綿密的質地，將多重抗老胜肽與微藻植物脂質深層封存於肌底。一夜醒來肌膚如同喝飽水般細緻柔滑，淡化疲憊憔悴氣色。',
-        highlights: '複合多肽修護科技，全方位改善肌膚彈性\n深層潤澤保濕，乾燥冷氣房與換季救星\n吸收後肌膚呈現柔焦細緻光澤',
-        usage: '夜間保養最後一步，挖取約珍珠大小，於雙手微搓溫熱後按壓於全臉及頸部肌膚。',
-        ingredients: '多肽複合物、深海微藻甾醇、有機堅果油、神經醯胺'
-      },
-      {
-        id: 'p14',
-        cat: 'anti',
-        name: '玻璃肌鑽光C＋膠原',
-        spec: '15ml',
-        badge: '高光美白',
-        featured: false,
-        images: ['./S_玻璃肌C.jpg'],
-        desc: '穩定型乙基維他命C搭配深海魚水解膠原蛋白，針對暗沉無光、膚色不均提供極致澄淨修護。讓肌膚在光線下自帶鑽石般通透折射的「玻璃肌」質感。',
-        highlights: '高穩定活性維他命C，溫和不易氧化\n水解小分子膠原，提升飽滿澎潤感\n均勻膚色明亮度，散發自然高光',
-        usage: '日間或夜間潔面調理後，取2-3滴輕拍於全臉，日間使用請搭配防曬霜加強保護。',
-        ingredients: '乙基維他命C (EAC)、小分子水解膠原蛋白、熊果素萃取、玻尿酸'
-      },
-      {
-        id: 'p15',
-        cat: 'anti',
-        name: '仿生微藻無酸煥膚精華',
-        spec: '15ml',
-        badge: '無酸溫和',
-        featured: false,
-        images: ['./S_仿生煥膚.jpg'],
-        desc: '顛覆傳統酸類煥膚的刺痛脫皮困擾！採用仿生微藻天然酵素代謝機制，溫和分解老化多餘角質，暢通毛孔阻塞，敏感肌與乾性肌膚也能無負擔擁有柔嫩細滑好膚質。',
-        highlights: '零果酸、零水楊酸，溫和不刺激無脫皮期\n仿生微藻酵素，精準代謝老廢角質\n平滑粉刺毛孔顆粒，提升後續保養吸收力',
-        usage: '夜間清潔後，於化妝水前或後取適量塗抹於全臉或T區，可每日安心使用。',
-        ingredients: '仿生微藻發酵酵素、泛醇 (維他命B5)、積雪草精華、尿囊素'
-      },
-      {
-        id: 'p16',
-        cat: 'anti',
-        name: '極補仙氣面膜',
-        spec: '25ml / 單片',
-        badge: '急救補水',
-        featured: false,
-        images: ['./S_仙氣面膜.jpg'],
-        desc: '滿載 25ml 高濃縮微藻活泉精華，採用親膚隱形羽絲縷膜布，緊密貼合每一寸肌膚紋理。15分鐘快速退紅補水，重要聚會與約會前必備的透光仙氣急救法寶！',
-        highlights: '25ml 超大容量高濃縮精華注入\n極薄羽絲縷膜布，輕透隱形高吸附\n曬後舒緩、換季脫皮、妝前服貼急救首選',
-        usage: '潔面後將面膜輕敷於全臉，靜待15-20分鐘後取下，輕拍殘餘精華至完全吸收。',
-        ingredients: '海洋微藻保濕活萃、水解膠原蛋白、洋甘菊舒敏精露、玻尿酸胜肽'
-      },
-      {
-        id: 'p17',
-        cat: 'anti',
-        name: '北法黃金藻防曬霜 SPF 50+',
-        spec: '30ml',
-        badge: '全光譜防護',
-        featured: false,
-        images: ['./S_北法防曬.jpg'],
-        desc: '萃取自法國布列塔尼黃金海藻，提供 SPF 50+ / PA++++ 高規格全光譜防護，有效阻絕紫外線及環境傷害。清爽水乳質地，不油膩不悶痘。',
-        highlights: '北法黃金藻天然抗光老化精華注入\n羽量級輕透質地，後續上妝不搓泥\n海洋友善配方，敏感肌適用',
-        usage: '日間保養最後一步、出門前15分鐘取適量均勻塗抹於臉部及頸部肌膚。',
-        ingredients: '北法黃金海藻萃取、微粒二氧化鈦、紅沒藥醇'
-      },
-      {
-        id: 'p18',
-        cat: 'anti',
-        name: '地中海粉紅微藻粉底霜 SPF 50+',
-        spec: '30ml',
-        badge: '養膚裸妝',
-        featured: false,
-        images: ['./S_地中粉底.jpg'],
-        desc: '兼具頂級護膚與自然潤色的全能粉底霜。蘊含地中海粉紅微藻精粹，輕輕抹開即與肌膚融合，修飾暗沉蠟黃與小瑕疵，打造天生好膚質般的粉嫩光澤。',
-        highlights: '養膚精華添加，帶妝整天不暗沉、不拔乾\nSPF 50+ 高係數防護，一瓶搞定防曬與底妝\n自然修飾好氣色偽素顏必備',
-        usage: '基礎保養後，取適量均勻點於額頭、兩頰與下巴，以海綿或指腹由內向外推勻。',
-        ingredients: '地中海粉紅微藻活性物、角鯊烷、雲母光感粒子、SPF50防曬劑'
+        images: ['https://images.unsplash.com/photo-1620916566762-b9e7c37cfce3?auto=format&fit=crop&w=800&q=80'],
+        desc: '高抗氧活性微藻精萃與緊緻胜肽，撫平細紋，提升臉部緊實飽滿度。',
+        highlights: '濃縮緊緻胜肽，撫平乾燥細紋\n絲滑好延展，極佳吸收度',
+        usage: '早晚取3滴順著下顎線向上提拉按摩。',
+        ingredients: '四胜肽抗老因子、紅藻賦活素、Q10'
       },
       {
         id: 'p19',
@@ -678,12 +703,12 @@
         name: '心生。洗髮精',
         spec: '500ml',
         badge: '回購冠軍',
-        featured: true,
-        images: ['./S_洗髮精.jpg'],
-        desc: '從「心」重拾頭皮的輕盈呼吸感！無矽靈、無化學增稠劑。能溫柔深層淨化毛囊油脂角質，洗後髮根自然蓬鬆立體，頭皮清爽無負擔。',
-        highlights: '天然草本植物萃取，溫和平衡頭皮皮脂分泌\n無矽靈、無重金屬、無環境荷爾蒙\n大容量 500ml 全家人皆適宜',
-        usage: '取適量於濕髮上搓揉起泡，以指腹輕輕按摩頭皮2-3分鐘後以清水沖淨，洗兩次洗感更佳。',
-        ingredients: '迷迭香精萃、生薑根萃取、茶樹精油、何首烏萃取、薄荷精華'
+        featured: true, // 首頁主打
+        images: ['https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=800&q=80'],
+        desc: '從「心」重拾頭皮的輕盈呼吸感！無矽靈天然草本淨化，調理頭皮微生態，洗後髮根自然蓬鬆立體，頭皮清爽無負擔。',
+        highlights: '天然草本萃取，溫和平衡皮脂\n無矽靈、無重金屬\n大容量 500ml 居家常備首選',
+        usage: '濕髮搓揉起泡按摩頭皮2-3分鐘後沖淨。',
+        ingredients: '迷迭香精萃、生薑根萃取、茶樹精油、薄荷'
       },
       {
         id: 'p20',
@@ -691,38 +716,12 @@
         name: '心生。養髮液（花調）',
         spec: '150ml',
         badge: '蘊髮必備',
-        featured: true,
-        images: ['./S_養髮花.jpg'],
-        desc: '「蘊髮育膚」核心力作！高活性植物精華直達髮根深處，給予頭皮充分營養滋補，強健髮根減少斷裂。伴隨柔和清雅的花香草本氣息，護理同時放鬆壓力情緒。',
-        highlights: '活化滋養髮根毛囊，調理稀疏細軟髮質\n清爽水感質地，噴灑後不油膩不扁塌\n花香調精油調香，舒緩日常緊繃思緒',
-        usage: '洗髮吹乾後或日常頭皮乾燥緊繃時，均勻噴灑於頭皮分線處，再以黃金梳或指腹輕柔按摩至吸收。',
-        ingredients: '多重活性胜肽養髮因子、薰衣草花精油、洋甘菊、人參萃取、維他命B7'
-      },
-      {
-        id: 'p21',
-        cat: 'hair',
-        name: '心生。養髮液（木調）',
-        spec: '150ml',
-        badge: '沉穩木質',
         featured: false,
-        images: ['./S_養髮木.jpg'],
-        desc: '結合大西洋雪松與沉穩木質精油香氣，特別適合易出油、頭皮悶熱困擾者。深層淨化控油，為髮根營造乾爽純淨的健康生長微環境。',
-        highlights: '天然雪松木質調精油，深度沉靜身心靈\n平衡頭皮油脂分泌，告別午後油膩異味\n強健髮幹支撐力，打造空氣感豐盈秀髮',
-        usage: '洗後頭皮拭乾後，分區噴灑於頭皮各處，搭配指腹畫圈按壓1-2分鐘。',
-        ingredients: '大西洋雪松精油、扁柏萃取、鋅 PCA 調理控油因子、迷迭香葉萃取'
-      },
-      {
-        id: 'p22',
-        cat: 'hair',
-        name: '心生。護髮精萃',
-        spec: '120ml',
-        badge: '絲柔光澤',
-        featured: false,
-        images: ['./S_護髮素.jpg'],
-        desc: '輕盈好吸收的免沖洗護髮油，迅速滲透受損髮絲毛鱗片，撫平毛躁、鎖住水份。吹整前使用能有效對抗熱風高溫傷害，讓秀髮散發如絲緞般的自然健康光澤。',
-        highlights: '質地清爽如絲，擦後雙手不黏膩\n熱保護抗躁科技，抵禦吹風機電棒熱傷害\n瞬效修護受損分岔髮尾',
-        usage: '洗髮擦至半乾或出門造型前，按壓1-2滴於手心搓勻，由中段順至髮尾塗抹，免沖洗。',
-        ingredients: '摩洛哥堅果油、山茶花籽油、植物角鯊烷、荷荷芭油'
+        images: ['https://images.unsplash.com/photo-1608248597359-0f46c645e755?auto=format&fit=crop&w=800&q=80'],
+        desc: '活化滋養髮根毛囊，優雅草花香氛，強健髮根減少斷裂，護理同時放鬆壓力。',
+        highlights: '活化滋養毛囊，調理細軟髮\n清爽水感質地，噴灑後不扁塌',
+        usage: '洗後吹乾分區噴灑於頭皮分線處按摩。',
+        ingredients: '多重活性胜肽因子、薰衣草花精油'
       },
       {
         id: 'p23',
@@ -730,12 +729,12 @@
         name: '心宇。沐浴露',
         spec: '400ml',
         badge: '香氛療癒',
-        featured: true,
-        images: ['./S_沐浴露.jpg'],
-        desc: '「沐浴不僅是洗淨，更是給心靈的一場儀式。」融合多重天然植萃精油，在溫熱蒸氣中綻放療癒香氛，溫柔洗去一身塵囂與身心疲憊，肌膚柔嫩水潤不緊繃。',
-        highlights: '天然純植物精油調香，舒緩放鬆安神\n親膚弱酸性配方，洗後肌膚柔軟水嫩\n無人工香精、無 SLS/SLES 刺激性起泡劑',
-        usage: '取適量於沐浴球或掌心搓揉起泡，塗抹全身並享受芳香蒸氣，最後以溫水洗淨。',
-        ingredients: '甜橙精油、真正薰衣草精油、乳香精油、甜杏仁油'
+        featured: true, // 首頁主打
+        images: ['https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80'],
+        desc: '沐浴不僅是洗淨，更是給心靈的一場儀式。天然純精油芳香蒸氣洗去一身疲憊，洗後水潤不緊繃。',
+        highlights: '天然純植物精油調香，舒緩安神\n親膚弱酸性配方，肌膚柔嫩細滑',
+        usage: '取適量搓揉起泡塗抹全身後沖淨。',
+        ingredients: '甜橙精油、薰衣草精油、乳香精油'
       },
       {
         id: 'p24',
@@ -744,15 +743,15 @@
         spec: '100ml',
         badge: '空間淨化',
         featured: false,
-        images: ['./S_能量噴霧.jpg'],
-        desc: '以天然草本芳香精華與能量礦物能量水調和，能快速轉化室內空間沉悶氛圍，提振能量場。適合辦公室、臥室助眠或瑜伽冥想前噴灑使用。',
-        highlights: '天然植萃精油蒸餾純露基底\n隨身淨化氣場、舒緩焦慮情緒\n可噴灑於枕頭、衣物或空氣中',
-        usage: '距離身體或空間約30公分輕按2-3下，深呼吸感受芳香能量分子帶來的寧靜平穩。',
-        ingredients: '白鼠尾草精露、乳香、雪松精油、佛手柑、能量純水'
+        images: ['https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=800&q=80'],
+        desc: '天然草本芳香精華與能量礦物水調和，隨身淨化氣場，舒緩焦慮情緒回歸平靜。',
+        highlights: '天然植萃純露基底\n空間、衣物、枕頭皆可噴灑',
+        usage: '距離空間30公分輕按2-3下深呼吸。',
+        ingredients: '白鼠尾草精露、乳香、雪松精油'
       }
     ];
 
-    const STORAGE_KEY = 'joy_enjoy_products_showcase_v3';
+    const STORAGE_KEY = 'joy_enjoy_products_spa_v4';
     function loadProducts() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -770,42 +769,101 @@
     }
 
     let products = loadProducts();
+    let currentPage = 'home';
     let currentCat = 'all';
     let searchQuery = '';
-    let currentMode = 'front';
     let activeModalImgIndex = 0;
     let currentModalProduct = null;
     let editImagesList = [];
 
-    function switchView(mode) {
-      currentMode = mode;
-      const front = document.getElementById('view-front');
-      const admin = document.getElementById('view-admin');
-      const text = document.getElementById('toggleModeText');
-      const icon = document.getElementById('toggleModeIcon');
+    function navigateTo(page) {
+      currentPage = page;
 
-      if (mode === 'front') {
-        front.classList.remove('hidden');
-        admin.classList.add('hidden');
-        text.textContent = '內容管理';
-        icon.textContent = '⚙️';
-        renderFront();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        front.classList.add('hidden');
-        admin.classList.remove('hidden');
-        text.textContent = '返回前台展示';
-        icon.textContent = '🏠';
+      document.getElementById('page-home').classList.add('hidden');
+      document.getElementById('page-catalog').classList.add('hidden');
+      document.getElementById('page-salon').classList.add('hidden');
+      document.getElementById('page-admin').classList.add('hidden');
+
+      document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+      const activeNav = document.getElementById(`nav-${page}`);
+      if (activeNav) activeNav.classList.add('active');
+
+      const adminBtnText = document.getElementById('toggleModeText');
+      const adminBtnIcon = document.getElementById('toggleModeIcon');
+
+      if (page === 'admin') {
+        document.getElementById('page-admin').classList.remove('hidden');
+        adminBtnText.textContent = '返回前台';
+        adminBtnIcon.textContent = '🏠';
         renderAdmin();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById(`page-${page}`).classList.remove('hidden');
+        adminBtnText.textContent = '內容管理';
+        adminBtnIcon.textContent = '⚙️';
+
+        if (page === 'home') renderHomePage();
+        if (page === 'catalog') renderCatalogPage();
       }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function toggleMode() {
-      switchView(currentMode === 'front' ? 'admin' : 'front');
+    function toggleAdminMode() {
+      navigateTo(currentPage === 'admin' ? 'home' : 'admin');
     }
 
-    function renderFront() {
+    function goToCategory(catId) {
+      currentCat = catId;
+      navigateTo('catalog');
+    }
+
+    function renderHomePage() {
+      const container = document.getElementById('featuredGrid');
+      let featured = products.filter(p => p.featured);
+      if (featured.length === 0) featured = products.slice(0, 4);
+
+      container.innerHTML = featured.map(p => {
+        const imgs = Array.isArray(p.images) && p.images.length > 0 ? p.images : ['https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80'];
+        const mainImg = imgs[0];
+
+        return `
+          <div class="bg-white rounded-2xl border border-stone-200/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+            <div onclick="openDetailModal('${p.id}')" class="cursor-pointer">
+              <div class="relative aspect-square overflow-hidden bg-stone-100">
+                <img 
+                  src="${mainImg}" 
+                  alt="${p.name}" 
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onerror="this.src='https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80'"
+                />
+                <div class="absolute top-2.5 left-2.5 flex flex-col gap-1">
+                  ${p.badge ? `<span class="badge-gold text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">${p.badge}</span>` : ''}
+                  <span class="bg-stone-900/85 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">🌟 主打推薦</span>
+                </div>
+              </div>
+
+              <div class="p-4 sm:p-5">
+                <div class="text-[11px] text-amber-800 font-semibold mb-1 flex items-center justify-between">
+                  <span>${getCategoryName(p.cat)}</span>
+                  <span class="text-stone-400">${p.spec || '標準規格'}</span>
+                </div>
+                <h4 class="font-bold text-stone-900 text-base mb-1.5 group-hover:text-amber-800 transition line-clamp-1">${p.name}</h4>
+                <p class="text-stone-500 text-xs line-clamp-2 leading-relaxed">${p.desc}</p>
+              </div>
+            </div>
+
+            <div class="px-4 sm:px-5 pb-4 pt-0">
+              <button onclick="openDetailModal('${p.id}')" class="w-full py-2.5 bg-stone-50 hover:bg-amber-50 text-stone-700 hover:text-amber-800 border border-stone-200 hover:border-amber-300 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1">
+                🔍 探索圖文詳情
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderCatalogPage() {
       renderCategoryTabs();
       renderProductGrid();
     }
@@ -877,13 +935,14 @@
                 <img 
                   src="${mainImg}" 
                   alt="${p.name}" 
+                  loading="lazy"
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onerror="this.src='https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80'"
                 />
                 
                 <div class="absolute top-2.5 left-2.5 flex flex-col gap-1">
                   ${p.badge ? `<span class="badge-gold text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">${p.badge}</span>` : ''}
-                  ${p.featured ? `<span class="bg-stone-900/85 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">✨ 招牌精選</span>` : ''}
+                  ${p.featured ? `<span class="bg-stone-900/85 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">✨ 主打</span>` : ''}
                 </div>
 
                 ${imgCount > 1 ? `
@@ -905,7 +964,7 @@
 
             <div class="px-4 sm:px-5 pb-4 pt-0 flex gap-2">
               <button onclick="openDetailModal('${p.id}')" class="flex-1 py-2.5 bg-stone-50 hover:bg-amber-50 text-stone-700 hover:text-amber-800 border border-stone-200 hover:border-amber-300 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1">
-                🔍 深入圖文詳情
+                🔍 圖文詳情
               </button>
               <a href="https://myship.7-11.com.tw/general/detail/GM2505047454173" target="_blank" class="px-3.5 py-2.5 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-xl transition text-center shadow-sm">
                 賣場
@@ -1093,8 +1152,10 @@
             </td>
             <td class="px-4 py-3 text-xs text-stone-600">${getCategoryName(p.cat)}</td>
             <td class="px-4 py-3 text-xs text-stone-500">${p.spec || '-'}</td>
+            <td class="px-4 py-3 text-xs">
+              ${p.featured ? `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">🌟 首頁主打</span>` : '<span class="text-stone-300">一般</span>'}
+            </td>
             <td class="px-4 py-3 text-xs font-semibold text-amber-900">${imgs.length} 張</td>
-            <td class="px-4 py-3 text-xs">${p.badge ? `<span class="badge-gold px-2 py-0.5 rounded font-semibold">${p.badge}</span>` : '-'}</td>
             <td class="px-4 py-3 text-right">
               <div class="flex items-center justify-end gap-2">
                 <button onclick="editProduct('${p.id}')" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold rounded-lg text-xs transition">✏️ 編輯圖文</button>
@@ -1150,7 +1211,7 @@
       textarea.value = editImagesList.join('\n');
 
       if (editImagesList.length === 0) {
-        row.innerHTML = `<span class="text-xs text-stone-400 py-2">尚未加入圖片，請上傳照片或在下方貼上網址/檔名</span>`;
+        row.innerHTML = `<span class="text-xs text-stone-400 py-2">尚未加入圖片</span>`;
         return;
       }
 
@@ -1174,16 +1235,7 @@
 
     function updateImagesFromText(val) {
       editImagesList = val.split('\n').map(s => s.trim()).filter(Boolean);
-      const row = document.getElementById('edit-images-preview-row');
-      if (editImagesList.length === 0) {
-        row.innerHTML = `<span class="text-xs text-stone-400 py-2">尚未加入圖片</span>`;
-      } else {
-        row.innerHTML = editImagesList.map((src, i) => `
-          <div class="relative w-16 h-16 rounded-lg overflow-hidden border border-stone-300 flex-shrink-0">
-            <img src="${src}" class="w-full h-full object-cover">
-          </div>
-        `).join('');
-      }
+      updateEditImagesUI();
     }
 
     function handleMultipleFileUpload(e) {
@@ -1198,7 +1250,7 @@
           loaded++;
           if (loaded === files.length) {
             updateEditImagesUI();
-            alert(`已成功載入 ${files.length} 張圖片！點擊最下方「確認儲存」即可完成更新。`);
+            alert(`已載入 ${files.length} 張圖片！`);
           }
         };
         reader.readAsDataURL(file);
@@ -1232,7 +1284,8 @@
       saveProducts(products);
       closeProductModal();
       renderAdmin();
-      renderFront();
+      if (currentPage === 'home') renderHomePage();
+      if (currentPage === 'catalog') renderCatalogPage();
     }
 
     function deleteProduct(id) {
@@ -1241,7 +1294,8 @@
         products = products.filter(item => item.id !== id);
         saveProducts(products);
         renderAdmin();
-        renderFront();
+        if (currentPage === 'home') renderHomePage();
+        if (currentPage === 'catalog') renderCatalogPage();
       }
     }
 
@@ -1249,7 +1303,7 @@
       const blob = new Blob([JSON.stringify(products, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `joy_enjoy_products_showcase_${new Date().toISOString().slice(0,10)}.json`;
+      a.download = `joy_enjoy_products_spa_${new Date().toISOString().slice(0,10)}.json`;
       a.click();
       alert('已下載備份 JSON 檔案！');
     }
@@ -1264,7 +1318,8 @@
           if (Array.isArray(list) && list.length > 0) {
             saveProducts(list);
             renderAdmin();
-            renderFront();
+            if (currentPage === 'home') renderHomePage();
+            if (currentPage === 'catalog') renderCatalogPage();
             alert(`成功匯入 ${list.length} 筆產品資料！`);
           } else { alert('檔案格式不符'); }
         } catch (err) { alert('匯入失敗：' + err.message); }
@@ -1276,17 +1331,19 @@
       if (confirm('確定要還原成官方原廠預設的 24 項產品展示圖文嗎？您目前的自訂修改將被覆蓋。')) {
         saveProducts([...DEFAULT_PRODUCTS]);
         renderAdmin();
-        renderFront();
+        if (currentPage === 'home') renderHomePage();
+        if (currentPage === 'catalog') renderCatalogPage();
         alert('已恢復官方預設圖文！');
       }
     }
 
-    document.getElementById('searchInput').addEventListener('input', e => {
+    document.getElementById('searchInput')?.addEventListener('input', e => {
       searchQuery = e.target.value;
       renderProductGrid();
     });
 
-    renderFront();
+    // 預設進入形象首頁
+    navigateTo('home');
   </script>
 </body>
 </html>
