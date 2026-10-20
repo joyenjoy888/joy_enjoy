@@ -881,3 +881,346 @@
     function closeDetailModal() {
       $('detailModal').classList.add('hidden');
     }
+function switchAdminTab(t) {
+      ['products','services','tags','banner'].forEach(tab => {
+        const btn = $('tabBtn-' + tab);
+        const p = $('adminPanel-' + tab);
+        if (tab === t) {
+          btn.className = 'px-4 py-2 text-xs font-bold rounded-lg bg-amber-700 text-white';
+          p.classList.remove('hidden');
+        } else {
+          btn.className = 'px-4 py-2 text-xs font-bold rounded-lg bg-white text-stone-700';
+          p.classList.add('hidden');
+        }
+      });
+      renderAdmin();
+    }
+
+    function renderAdmin() {
+      renderAdminProducts();
+      renderAdminServices();
+      renderAdminTags();
+      loadBannerInputs();
+    }
+
+    function renderAdminProducts() {
+      const sf = $('adminSeriesFilter');
+      sf.innerHTML = `<option value="all">全系列</option>` + SERIES_LIST.filter(i => i.id !== 'all').map(i => `<option value="${i.id}">${i.name}</option>`).join('');
+      const sv = sf.value || 'all';
+      const tb = $('adminProductsTableBody');
+      const filtered = products.filter(p => (sv === 'all' || p.series === sv));
+      tb.innerHTML = filtered.map(p => `
+        <tr class="hover:bg-amber-50/50">
+          <td class="px-4 py-2 font-bold">${p.name} <span class="text-stone-400 font-normal">(${p.spec||''})</span></td>
+          <td class="px-4 py-2 text-stone-600">${getSeriesName(p.series)}</td>
+          <td class="px-4 py-2"><span class="px-2 py-0.5 bg-stone-100 rounded font-bold">${p.categoryTag}</span></td>
+          <td class="px-4 py-2">${p.featured ? '🌟 主打' : '-'}</td>
+          <td class="px-4 py-2 text-right">
+            <button onclick="editProduct('${p.id}')" class="text-amber-800 font-bold mr-2">編輯</button>
+            <button onclick="deleteProduct('${p.id}')" class="text-red-600 font-bold">刪除</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAdminServices() {
+      const tb = $('adminServicesTableBody');
+      tb.innerHTML = services.map(s => `
+        <tr class="hover:bg-amber-50/50">
+          <td class="px-4 py-2 font-bold">${s.name}</td>
+          <td class="px-4 py-2 text-stone-700 font-medium">${formatServicePriceDuration(s)}</td>
+          <td class="px-4 py-2"><span class="px-2 py-0.5 bg-stone-100 rounded font-bold">${s.categoryTag}</span></td>
+          <td class="px-4 py-2 text-stone-400 font-mono truncate max-w-[150px]">${s.link}</td>
+          <td class="px-4 py-2 text-right">
+            <button onclick="editService('${s.id}')" class="text-amber-800 font-bold mr-2">編輯</button>
+            <button onclick="deleteService('${s.id}')" class="text-red-600 font-bold">刪除</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAdminTags() {
+      const el = $('adminTagsList');
+      el.innerHTML = categoryTags.map((t, i) => `
+        <div class="p-3 bg-stone-50 border rounded-xl flex justify-between items-center text-xs">
+          <strong class="text-stone-900">${t}</strong>
+          <div>
+            <button onclick="renameTag(${i})" class="mr-1">✏️</button>
+            <button onclick="deleteTag(${i})" class="text-red-600">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addNewCategoryTagPrompt() {
+      const n = prompt('輸入新標籤名稱 (如 #頭皮髮絲養護)：');
+      if (n && n.trim()) {
+        let t = n.trim();
+        if (!t.startsWith('#')) t = '#' + t;
+        if (!categoryTags.includes(t)) {
+          categoryTags.push(t);
+          saveAll();
+          renderCategoryTagBar();
+          renderAdminTags();
+        }
+      }
+    }
+
+    function renameTag(i) {
+      const old = categoryTags[i];
+      const n = prompt(`修改標籤名稱：`, old);
+      if (n && n.trim()) {
+        let nt = n.trim();
+        if (!nt.startsWith('#')) nt = '#' + nt;
+        categoryTags[i] = nt;
+        products.forEach(p => { if (p.categoryTag === old) p.categoryTag = nt; });
+        services.forEach(s => { if (s.categoryTag === old) s.categoryTag = nt; });
+        saveAll();
+        renderCategoryTagBar();
+        renderAdmin();
+      }
+    }
+
+    function deleteTag(i) {
+      if (categoryTags.length <= 1) { alert('至少保留一個標籤'); return; }
+      if (confirm(`確定刪除標籤「${categoryTags[i]}」？`)) {
+        const del = categoryTags.splice(i, 1)[0];
+        const fb = categoryTags[0];
+        products.forEach(p => { if (p.categoryTag === del) p.categoryTag = fb; });
+        services.forEach(s => { if (s.categoryTag === del) s.categoryTag = fb; });
+        saveAll();
+        renderCategoryTagBar();
+        renderAdmin();
+      }
+    }
+
+    function loadBannerInputs() {
+      const b1 = bannerConfig.card1 || DEFAULT_BANNER.card1;
+      const b2 = bannerConfig.card2 || DEFAULT_BANNER.card2;
+      $('ban1-title').value = b1.title||'';
+      $('ban1-tag').value = b1.tag||'';
+      $('ban1-desc').value = b1.desc||'';
+      $('ban1-img').value = b1.img||'';
+      $('ban1-btnText').value = b1.btnText||'';
+      $('ban1-btnLink').value = b1.btnLink||'';
+
+      $('ban2-title').value = b2.title||'';
+      $('ban2-tag').value = b2.tag||'';
+      $('ban2-desc').value = b2.desc||'';
+      $('ban2-img').value = b2.img||'';
+      $('ban2-btnText').value = b2.btnText||'';
+      $('ban2-btnLink').value = b2.btnLink||'';
+    }
+
+    function saveBannerConfig(e) {
+      e.preventDefault();
+      bannerConfig = {
+        card1: { title: $('ban1-title').value, tag: $('ban1-tag').value, desc: $('ban1-desc').value, img: $('ban1-img').value, btnText: $('ban1-btnText').value, btnLink: $('ban1-btnLink').value },
+        card2: { title: $('ban2-title').value, tag: $('ban2-tag').value, desc: $('ban2-desc').value, img: $('ban2-img').value, btnText: $('ban2-btnText').value, btnLink: $('ban2-btnLink').value }
+      };
+      saveAll();
+      alert('活動設定儲存成功！');
+      if (currentPage === 'home') renderHome();
+    }
+
+    function openProductEditModal(p = null) {
+      const ss = $('ep-series');
+      ss.innerHTML = SERIES_LIST.filter(i => i.id !== 'all').map(i => `<option value="${i.id}">${i.name}</option>`).join('');
+      const ts = $('ep-tag');
+      ts.innerHTML = categoryTags.map(t => `<option value="${t}">${t}</option>`).join('');
+
+      if (p) {
+        $('prodModalTitle').textContent = '編輯產品：' + p.name;
+        $('ep-id').value = p.id;
+        $('ep-name').value = p.name;
+        $('ep-series').value = p.series;
+        $('ep-tag').value = p.categoryTag;
+        $('ep-spec').value = p.spec||'';
+        $('ep-badge').value = p.badge||'';
+        $('ep-featured').checked = !!p.featured;
+        $('ep-images').value = (p.images||[]).join('\n');
+        $('ep-desc').value = p.desc||'';
+        $('ep-usage').value = p.usage||'';
+        $('ep-ing').value = p.ingredients||'';
+      } else {
+        $('prodModalTitle').textContent = '新增產品';
+        ['ep-id','ep-name','ep-spec','ep-badge','ep-images','ep-desc','ep-usage','ep-ing'].forEach(id => $(id).value = '');
+        $('ep-featured').checked = false;
+      }
+      $('productEditModal').classList.remove('hidden');
+    }
+
+    function editProduct(id) {
+      const p = products.find(i => i.id === id);
+      if (p) openProductEditModal(p);
+    }
+
+    function closeProductEditModal() {
+      $('productEditModal').classList.add('hidden');
+    }
+
+    function saveProductForm(e) {
+      e.preventDefault();
+      const id = $('ep-id').value;
+      const imgs = $('ep-images').value.split('\n').map(s=>s.trim()).filter(Boolean);
+      const data = {
+        name: $('ep-name').value.trim(),
+        series: $('ep-series').value,
+        categoryTag: $('ep-tag').value,
+        spec: $('ep-spec').value.trim(),
+        badge: $('ep-badge').value.trim(),
+        featured: $('ep-featured').checked,
+        images: imgs.length > 0 ? imgs : ['./Logo_big_pink.jpg'],
+        desc: $('ep-desc').value.trim(),
+        usage: $('ep-usage').value.trim(),
+        ingredients: $('ep-ing').value.trim()
+      };
+      if (id) {
+        products = products.map(p => p.id === id ? { ...p, ...data } : p);
+      } else {
+        products.unshift({ ...data, id: 'custom-' + Date.now() });
+      }
+      saveAll();
+      closeProductEditModal();
+      renderAdmin();
+      if (currentPage === 'home') renderHome();
+      if (currentPage === 'products') renderProducts();
+    }
+
+    function deleteProduct(id) {
+      if (confirm('確定刪除此產品？')) {
+        products = products.filter(i => i.id !== id);
+        saveAll();
+        renderAdmin();
+        if (currentPage === 'home') renderHome();
+        if (currentPage === 'products') renderProducts();
+      }
+    }
+
+    function openServiceEditModal(s = null) {
+      const ts = $('es-tag');
+      ts.innerHTML = categoryTags.map(t => `<option value="${t}">${t}</option>`).join('');
+
+      if (s) {
+        $('servModalTitle').textContent = '編輯課程：' + s.name;
+        $('es-id').value = s.id;
+        $('es-name').value = s.name;
+        $('es-price').value = s.price || '';
+        $('es-duration').value = s.duration || '';
+        $('es-tag').value = s.categoryTag;
+        $('es-desc').value = s.desc || '';
+        const sImgs = (s.images && s.images.length > 0) ? s.images : (s.image ? [s.image] : []);
+        $('es-img').value = sImgs.join('\n');
+        $('es-link').value = s.link || 'https://joyenjoy.simplybook.asia/';
+      } else {
+        $('servModalTitle').textContent = '新增課程';
+        $('es-id').value = '';
+        $('es-name').value = '';
+        $('es-price').value = '門市特惠';
+        $('es-duration').value = '60分鐘';
+        $('es-desc').value = '';
+        $('es-img').value = '';
+        $('es-link').value = 'https://joyenjoy.simplybook.asia/';
+      }
+      $('serviceEditModal').classList.remove('hidden');
+    }
+
+    function editService(id) {
+      const s = services.find(i => i.id === id);
+      if (s) openServiceEditModal(s);
+    }
+
+    function closeServiceEditModal() {
+      $('serviceEditModal').classList.add('hidden');
+    }
+
+    function saveServiceForm(e) {
+      e.preventDefault();
+      const id = $('es-id').value;
+      const imgs = $('es-img').value.split('\n').map(s => s.trim()).filter(Boolean);
+      const data = {
+        name: $('es-name').value.trim(),
+        price: $('es-price').value.trim(),
+        duration: $('es-duration').value.trim(),
+        categoryTag: $('es-tag').value,
+        desc: $('es-desc').value.trim(),
+        image: imgs[0] || 'https://joyenjoy.simplybook.asia/uploads/joyenjoy/image_files/preview/b07407001533ebda8c3aa9e1bb73a43e.jpg',
+        images: imgs.length > 0 ? imgs : ['https://joyenjoy.simplybook.asia/uploads/joyenjoy/image_files/preview/b07407001533ebda8c3aa9e1bb73a43e.jpg'],
+        link: $('es-link').value.trim() || 'https://joyenjoy.simplybook.asia/'
+      };
+      if (id) {
+        services = services.map(s => s.id === id ? { ...s, ...data } : s);
+      } else {
+        services.unshift({ ...data, id: 'custom-s-' + Date.now() });
+      }
+      saveAll();
+      closeServiceEditModal();
+      renderAdmin();
+      if (currentPage === 'services') renderServices();
+    }
+
+    function deleteService(id) {
+      if (confirm('確定刪除此課程？')) {
+        services = services.filter(i => i.id !== id);
+        saveAll();
+        renderAdmin();
+        if (currentPage === 'services') renderServices();
+      }
+    }
+
+    function exportAllData() {
+      const b = new Blob([JSON.stringify({ products, services, categoryTags, bannerConfig }, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(b);
+      a.download = `joy_enjoy_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    function importAllData(e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = ev => {
+        try {
+          const d = JSON.parse(ev.target.result);
+          if (d && d.products) {
+            products = d.products;
+            if (d.services) services = d.services;
+            if (d.categoryTags) categoryTags = d.categoryTags;
+            if (d.bannerConfig) bannerConfig = d.bannerConfig;
+            saveAll();
+            renderCategoryTagBar();
+            renderAdmin();
+            alert('匯入成功！');
+          }
+        } catch(err) { alert('匯入失敗：' + err.message); }
+      };
+      r.readAsText(f);
+    }
+
+    function resetToOfficialDefaults() {
+      if (confirm('確定還原成官方原廠預設的 23 款產品與 9 大課程嗎？')) {
+        products = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+        services = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
+        categoryTags = [...DEFAULT_TAGS];
+        bannerConfig = JSON.parse(JSON.stringify(DEFAULT_BANNER));
+        saveAll();
+        renderCategoryTagBar();
+        renderAdmin();
+        if (currentPage === 'home') renderHome();
+        if (currentPage === 'products') renderProducts();
+        if (currentPage === 'services') renderServices();
+        alert('已成功恢復官方原廠完整架構！');
+      }
+    }
+
+    $('prodSearchInput')?.addEventListener('input', e => {
+      searchQuery = e.target.value;
+      renderProducts();
+    });
+
+    renderCategoryTagBar();
+    navigateTo('home');
+  </script>
+</body>
+</html>
