@@ -500,6 +500,29 @@
       localStorage.setItem(SK_B, JSON.stringify(bannerConfig));
     }
 
+    // 自動非同步讀取 GitHub 根目錄上的 data.json
+    async function loadExternalData() {
+      try {
+        const res = await fetch('./data.json?v=' + Date.now()); // 防止瀏覽器快取
+        if (res.ok) {
+          const d = await res.json();
+          if (d.products && Array.isArray(d.products)) products = d.products;
+          if (d.services && Array.isArray(d.services)) services = d.services;
+          if (d.categoryTags && Array.isArray(d.categoryTags)) categoryTags = d.categoryTags;
+          if (d.bannerConfig) bannerConfig = d.bannerConfig;
+          saveAll();
+          renderCategoryTagBar();
+          if (currentPage === 'home') renderHome();
+          if (currentPage === 'products') renderProducts();
+          if (currentPage === 'services') renderServices();
+          if (currentPage === 'admin') renderAdmin();
+          console.log('✅ 已成功從 data.json 同步最新官網資料！');
+        }
+      } catch (err) {
+        console.warn('⚠️ 外部 data.json 讀取失敗，使用內建資料：', err);
+      }
+    }
+
     let currentPage = 'home', currentSeries = 'all', currentTag = 'all', searchQuery = '';
 
     function navigateTo(page) {
@@ -1172,7 +1195,7 @@ function switchAdminTab(t) {
       const b = new Blob([JSON.stringify({ products, services, categoryTags, bannerConfig }, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(b);
-      a.download = `joy_enjoy_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.download = 'data.json'; // 讓後台匯出時直接命名為 data.json
       a.click();
     }
 
@@ -1221,6 +1244,7 @@ function switchAdminTab(t) {
 
     renderCategoryTagBar();
     navigateTo('home');
+    loadExternalData(); // 🚀 啟動時自動拉取 GitHub 上的最新 data.json
   </script>
 </body>
 </html>
