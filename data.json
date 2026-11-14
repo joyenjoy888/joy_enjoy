@@ -23,7 +23,7 @@
       "categoryTag": "#頭皮髮絲養護",
       "spec": "150ml",
       "badge": "香氛蘊髮",
-      "featured": false,
+      "featured": true,
       "images": [
         "./img/S_養髮花.jpg",
         "./img/S_養髮2.jpg",
@@ -145,36 +145,6 @@
     {
       "id": "p10",
       "series": "skin",
-      "name": "北法黃金藻防曬霜",
-      "categoryTag": "#美顏逆時煥膚",
-      "spec": "50ml",
-      "badge": "物理溫和",
-      "featured": false,
-      "images": [
-        "./img/S_北法防曬.jpg"
-      ],
-      "desc": "北法純淨黃金藻抗光老化成分，水感無白痕，全面阻絕紫外線。",
-      "usage": "日間保養後出門前均勻塗抹。",
-      "ingredients": "北法黃金藻精萃、二氧化鈦、積雪草"
-    },
-    {
-      "id": "p11",
-      "series": "skin",
-      "name": "地中海 粉紅微藻粉底霜",
-      "categoryTag": "#美顏逆時煥膚",
-      "spec": "30ml",
-      "badge": "養膚底妝",
-      "featured": false,
-      "images": [
-        "./img/S_地中粉底.jpg"
-      ],
-      "desc": "添加珍稀粉紅微藻，自然粉嫩透亮光澤，輕薄遮瑕持妝一整天。",
-      "usage": "基礎保養後取適量由內向外推勻。",
-      "ingredients": "地中海粉紅微藻、超微粒礦物粉體"
-    },
-    {
-      "id": "p12",
-      "series": "skin",
       "name": "玻璃肌鑽光C＋膠原",
       "categoryTag": "#美顏逆時煥膚",
       "spec": "30ml",
@@ -188,7 +158,7 @@
       "ingredients": "乙基維他命C、水解海洋膠原蛋白"
     },
     {
-      "id": "p13",
+      "id": "p11",
       "series": "skin",
       "name": "仿生微藻無酸煥膚精華",
       "categoryTag": "#美顏逆時煥膚",
@@ -203,7 +173,7 @@
       "ingredients": "專利仿生微藻酵素、積雪草精萃"
     },
     {
-      "id": "p14",
+      "id": "p12",
       "series": "skin",
       "name": "極補仙氣面膜",
       "categoryTag": "#美顏逆時煥膚",
@@ -218,13 +188,13 @@
       "ingredients": "高純度玻尿酸原液、雪絨花精萃"
     },
     {
-      "id": "p15",
+      "id": "p13",
       "series": "angel",
       "name": "天使肌☆柔嫩潔膚乳",
       "categoryTag": "#身體清潔保養",
       "spec": "150ml",
       "badge": "溫和柔潤",
-      "featured": false,
+      "featured": true,
       "images": [
         "./img/T_B1潔膚乳.jpg"
       ],
@@ -233,7 +203,7 @@
       "ingredients": "溫和胺基酸、洋甘菊萃取、B5"
     },
     {
-      "id": "p16",
+      "id": "p14",
       "series": "angel",
       "name": "天使肌☆原初潔膚蜜",
       "categoryTag": "#美顏逆時煥膚",
@@ -248,7 +218,7 @@
       "ingredients": "多重植萃保濕因子、甘草酸二鉀"
     },
     {
-      "id": "p17",
+      "id": "p15",
       "series": "angel",
       "name": "天使肌☆全效保濕淨化水",
       "categoryTag": "#美顏逆時煥膚",
@@ -263,7 +233,7 @@
       "ingredients": "小分子玻尿酸、金縷梅純露"
     },
     {
-      "id": "p18",
+      "id": "p16",
       "series": "angel",
       "name": "天使肌☆全效修護精華乳",
       "categoryTag": "#美顏逆時煥膚",
@@ -278,7 +248,7 @@
       "ingredients": "角鯊烷、神經醯胺複合體"
     },
     {
-      "id": "p19",
+      "id": "p17",
       "series": "angel",
       "name": "天使肌☆炫麗七重保濕精華液",
       "categoryTag": "#美顏逆時煥膚",
@@ -293,7 +263,7 @@
       "ingredients": "七重玻尿酸複合矩陣、γ-PGA"
     },
     {
-      "id": "p20",
+      "id": "p18",
       "series": "angel",
       "name": "天使肌☆ RE",
       "categoryTag": "#美顏逆時煥膚",
@@ -308,7 +278,7 @@
       "ingredients": "複合胜肽賦活因子、深海藻活精萃"
     },
     {
-      "id": "p21",
+      "id": "p19",
       "series": "tools",
       "name": "黃金梳。大梳",
       "categoryTag": "#筋膜紓壓按摩",
@@ -325,7 +295,7 @@
       "ingredients": "純銅鍍金梳針、天然橡膠氣囊底座、精選手柄"
     },
     {
-      "id": "p22",
+      "id": "p20",
       "series": "tools",
       "name": "黃金梳。愛心梳",
       "categoryTag": "#筋膜紓壓按摩",
@@ -343,13 +313,13 @@
       "ingredients": "純銅鍍金針、高彈性氣囊底座"
     },
     {
-      "id": "p23",
+      "id": "p21",
       "series": "tools",
       "name": "黃金梳組合。大梳＆小梳",
       "categoryTag": "#筋膜紓壓按摩",
       "spec": "典雅禮盒雙入",
       "badge": "經典禮盒",
-      "featured": false,
+      "featured": true,
       "images": [
         "./img/H_大小組.jpg",
         "./img/H_大小組2.jpg",
@@ -373,7 +343,7 @@
         "./img/K_蘊髮基本.jpg",
         "./img/K_蘊髮基本2.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/3/",
       "desc": "專業頭皮諮詢檢測 → 專利黃金梳梳療放鬆 → 心生植萃髮浴潔淨 → 強化髮芯結構 → 深層蘊髮滋養 → 頭皮舒壓活絡。"
     },
     {
@@ -388,7 +358,7 @@
         "./img/K_蘊髮深層.jpg",
         "./img/K_蘊髮深層2.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/4/",
       "desc": "完整諮詢 → 黃金梳經絡梳療 → 天然植萃精油釋壓 → 頭頸筋膜深層按壓 → 肩頸排導舒壓 → 高效胜肽深層蘊髮。"
     },
     {
@@ -407,7 +377,7 @@
         "./img/K_筋膜活化5.jpg",
         "./img/K_筋膜活化6.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/17/",
       "desc": "深層筋膜放鬆 & 活化，解開累積在全身深層肌肉筋膜的緊繃與沾黏，讓動作流暢自如，讓緊繃身體由內而外深呼吸。"
     },
     {
@@ -423,7 +393,7 @@
         "./img/K_歐式按摩2.jpg",
         "./img/K_歐式按摩3.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/18/",
       "desc": "以瑞典式 (Swedish Massage) 為溫柔基底，無痛感，結合流暢能量手法與天然芳香精油，重尋深層靜謐與鬆馳。"
     },
     {
@@ -438,7 +408,7 @@
         "./img/K_歐式胸部.jpg",
         "./img/K_歐式胸部2.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/20/",
       "desc": "透過專業溫柔的歐式胸部淋巴與經絡能量排導手法，暢通胸廓緊繃氣血，舒緩乳房悶脹不適，重現自信光采。"
     },
     {
@@ -452,7 +422,7 @@
       "images": [
         "./img/K_逆肌光.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/19/",
       "desc": "8 步驟極致寵愛，定格青春！結合微藻無酸酵素溫和代謝粗糙角質、深層注水與多肽緊緻撫紋，重現晶瑩水潤極光。"
     },
     {
@@ -466,7 +436,7 @@
       "images": [
         "./img/K_美睫自然.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/7/",
       "desc": "宛若天生的自然裸妝睫毛，根根分明輕盈無重力感，修飾眼型輪廓，素顏也神采奕奕。"
     },
     {
@@ -480,7 +450,7 @@
       "images": [
         "./img/K_美睫濃密.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/8/",
       "desc": "多層次專業睫毛嫁接，綻放濃密深邃立體神采，打造亮眼吸睛的迷人眼神。"
     },
     {
@@ -489,18 +459,60 @@
       "price": "$299",
       "duration": "30分鐘",
       "categoryTag": "#筋膜紓壓按摩",
-      "badge": "明星體驗",
+      "badge": "極致紓壓",
       "image": "./img/K_梳療.jpg",
       "images": [
         "./img/K_梳療.jpg"
       ],
-      "link": "https://joyenjoy.simplybook.asia/",
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/14/",
       "desc": "【☆享梳☆ 黃金梳專利循環體驗】：快速體驗純銅鍍金黃金梳的神奇妙用！深層點壓百會穴與肩頸筋膜，瞬間釋放重壓感。"
+    },
+    {
+      "id": "s10",
+      "name": "天使肌 完美養膚",
+      "price": "$1600",
+      "duration": "60分鐘",
+      "categoryTag": "#身體凍齡保養",
+      "badge": "明星體驗",
+      "image": "./img/K_天使肌.jpg",
+      "images": [
+        "./img/K_天使肌.jpg"
+      ],
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/16/",
+      "desc": "【獨家技術最新安效皮膚更新術】：全新升級  完整體驗  $1600。"
+    },
+    {
+      "id": "s11",
+      "name": "Q潤無瑕美顏",
+      "price": "$2888",
+      "duration": "60分鐘",
+      "categoryTag": "#美顏逆時煥膚",
+      "badge": "無瑕美顏",
+      "image": "./img/K_無瑕美顏.jpg",
+      "images": [
+        "./img/K_無瑕美顏.jpg"
+      ],
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/9/",
+      "desc": "*含三種頂級C成份  *雙重頂級膠原  *鳥胺酸 【擊退黑 留下白】"
+    },
+    {
+      "id": "s12",
+      "name": "活顏淨痘無痕肌",
+      "price": "$1600",
+      "duration": "60分鐘",
+      "categoryTag": "#美顏逆時煥膚",
+      "badge": "美顏無痕",
+      "image": "./img/K_活顏淨痘.jpg",
+      "images": [
+        "./img/K_活顏淨痘.jpg"
+      ],
+      "link": "https://joyenjoy.simplybook.asia/v2/book/service/10/",
+      "desc": "*專利微藻晶球  *世界公認抗老成份  *【新世代維他命 A 】深入真皮層 推送老廢角質 無酸喚膚"
     }
   ],
   "categoryTags": [
     "#頭皮髮絲養護",
-    "#身體清潔保養",
+    "#身體凍齡保養",
     "#美顏逆時煥膚",
     "#筋膜紓壓按摩"
   ],
